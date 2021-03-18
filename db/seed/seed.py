@@ -83,7 +83,6 @@ class Seed:
                 # handle missing values
                 if value == '\\N':
                     value = None
-                    continue
 
                 # handle boolean values
                 if value in ['0', '1'] and original not in self._integer_fields:
