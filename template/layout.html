@@ -1,0 +1,50 @@
+<!doctype html>
+<html data-language="en_US" dir="ltr" lang="en">
+
+<head>
+    <title></title>
+    <meta charset="utf-8">
+    <link rel="icon" type="image/x-icon" href="/assets/images/icon.png" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <link rel="stylesheet" type="text/css" href="/assets/css/bootstrap.min.css" />
+    <link rel="stylesheet" type="text/css" href="/assets/css/bootstrap-theme.css" />
+    <link rel="stylesheet" type="text/css" href="/assets/css/fontawesome.min.css" />
+    <link rel="stylesheet" type="text/css" href="/assets/css/regular.min.css" />
+    <link rel="stylesheet" type="text/css" href="/assets/css/solid.min.css" />
+    {% block style %}{% endblock %}
+</head>
+
+<body>
+    <nav class="navbar navbar-expand-lg navbar-light">
+        <div class="container">
+            <a class="navbar-brand" href="/">
+                <img src="/assets/images/logo.png" height="30" alt="">
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+                aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav">
+                    <li class="nav-item">
+                        <a class="nav-link" aria-current="page" href="#">Movies</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">Tv Shows</a>
+                    </li>
+                </ul>
+                <div class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">I'm Feeling Lucky</a>
+                    </li>
+                </div>
+            </div>
+        </div>
+    </nav>
+    {% block content %}{% endblock %}
+</body>
+    <script src="/assets/js/bootstrap.min.js"></script>
+    <script src="/assets/js/jquery.min.js"></script>
+    {% block script %}{% endblock %}
+</html>
