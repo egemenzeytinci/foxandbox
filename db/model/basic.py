@@ -32,7 +32,7 @@ class Basic(Base):
     start_year = Column('start_year', Integer)
     end_year = Column('end_year', Integer)
     runtime = Column('runtime', Integer)
-    genres = Column('genres', Array(String))
+    genres = Column('genres', Array(String(10)))
     description = Column(Text)
     image_url = Column(Text)
     cluster = Column('cluster', Integer)
