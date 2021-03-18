@@ -80,6 +80,11 @@ class Seed:
             for original, column in columns.items():
                 value = row[original]
 
+                # handle missing values
+                if value == '\\N':
+                    value = None
+                    continue
+
                 # handle boolean values
                 if value in ['0', '1'] and original not in self._integer_fields:
                     value = value == '1'
@@ -95,10 +100,6 @@ class Seed:
                         break
 
                     value = TitleType.get(value)
-
-                # handle missing values
-                if value == '\\N':
-                    value = None
 
                 record[column] = value
 
