@@ -5,3 +5,15 @@ body,
     height: 100%;
     background: #374785;
 }
+
+.fade-image {
+    width: 600px;
+    height: 350px;
+}
+
+@media (max-width: 992px) {
+    .fade-image {
+        width: 100%;
+        height: 100%;
+    }
+}
