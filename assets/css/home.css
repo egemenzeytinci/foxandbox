@@ -7,8 +7,8 @@ body,
 }
 
 .fade-image {
-    width: 610px;
-    height: 325px;
+    width: 600px;
+    height: 350px;
 }
 
 @media (max-width: 992px) {
