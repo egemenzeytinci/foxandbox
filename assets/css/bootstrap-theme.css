@@ -9,3 +9,11 @@
 .white-text {
     color: white;
 }
+
+.card {
+    border: none;
+}
+
+.card-body {
+    padding-left: 0px;
+}
