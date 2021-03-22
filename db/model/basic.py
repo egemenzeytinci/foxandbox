@@ -35,6 +35,7 @@ class Basic(Base):
     genres = Column('genres', Array(String(10)))
     description = Column(Text)
     image_url = Column(Text)
+    horizontal_image = Column(Text)
     cluster = Column('cluster', Integer)
     is_crawled = Column('is_crawled', Boolean, default=False, index=True)
 
