@@ -13,8 +13,13 @@ class BasicFactory:
         """
         session = get_session()
 
+        filters = [
+            Basic.title_id.in_(ids),
+            Basic.is_crawled.is_(False),
+        ]
+
         try:
-            return session.query(Basic).filter(Basic.title_id.in_(ids)).all()
+            return session.query(Basic).filter(*filters).all()
         finally:
             session.close()
 
