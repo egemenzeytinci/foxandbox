@@ -22,6 +22,7 @@ def main():
         basics = bf.get_by_ids(rating_ids)
 
         if len(basics) == 0:
+            offset += 1
             continue
 
         # get title ids for the crawling
