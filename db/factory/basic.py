@@ -71,6 +71,49 @@ class BasicFactory:
         finally:
             session.close()
 
+    def get_new_released_movies(self):
+        """
+        Get new relased movies
+
+        :return: list of movies
+        :rtype: list[Basic, Rating]
+        """
+        b = Basic
+        r = Rating
+        tt = TitleType
+
+        session = get_session()
+
+        filters = [
+            r.num_votes >= 20000,
+            r.average_rating >= 6.0,
+            b.description.isnot(None),
+            b.horizontal_image.isnot(None),
+            b.title_type == tt.get('movie'),
+        ]
+
+        try:
+            rows = session \
+                .query(b, r) \
+                .join(r, b.title_id == r.title_id) \
+                .filter(*filters) \
+                .order_by(b.published_date.desc()) \
+                .limit(8) \
+                .all()
+
+            results = []
+
+            for row in rows:
+                a = AttrDict()
+                a.basic = row[0]
+                a.rating = row[1]
+
+                results.append(a)
+
+            return results
+        finally:
+            session.close()
+
     def save_all(self, basics):
         """
         Save all objects

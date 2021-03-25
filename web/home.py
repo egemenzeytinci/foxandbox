@@ -21,7 +21,7 @@ def get_home():
     grid_movies = bf.get_by_limit_and_offset(offset=day)
 
     # get other 8 movies for the card items
-    card_movies = bf.get_by_limit_and_offset(offset=day + 1, limit=8)
+    card_movies = bf.get_new_released_movies()
 
     r = AttrDict()
 
