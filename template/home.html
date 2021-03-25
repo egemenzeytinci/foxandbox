@@ -10,187 +10,88 @@
         <div class="row">
             <div id="carouselExampleFade" class="carousel slide carousel-fade" data-bs-ride="carousel">
                 <div class="carousel-inner">
-                    <div class="carousel-item active">
+                    {% for slide in slides %}
+                    <div class="carousel-item {{ 'active' if loop.index == 1 else '' }}">
                         <h3 class="white-text mt-3">
-                            Lorem ipsum dolor sit amet, consectetuer adipiscing elit.
+                            The fox out of the box!
                         </h3>
                         <p class="white-text">
-                            Lorem ipsum dolor sit amet, consectetuer adipiscing elit.
+                            Which fox will come out of the box tonight? 
+                            Now, find movies similar to the movie you liked before.
                         </p>
                         <div class="row mt-5">
                             <div class="col-12 col-md-6 col-xl-6">
-                                <img class="fade-image" src="/assets/images/tenet.jpg" alt="">
+                                <img class="fade-image" src="{{ slide.basic.horizontal_image }}"
+                                    alt="{{ slide.basic.original_title }}">
                             </div>
                             <div class="col-12 col-md-6 col-xl-6">
+                                <a href="#" class="stretched-link"></a>
                                 <h5 class="white-text mt-3">
-                                    Lorem ipsum dolor sit amet, consectetuer adipiscing elit.
+                                    {{ slide.basic.original_title }}
                                 </h5>
                                 <h5 class="white-text mt-3">
-                                    Lorem, ipsum, dolor
+                                    {{ ', '.join(slide.basic.genres) }}
                                 </h5>
                                 <p class="white-text mt-4">
-                                    Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-                                    Quisque quis facilisis velit.
-                                    Nunc justo lorem, feugiat molestie faucibus ac, consequat nec magna.
+                                    {{ slide.basic.description }}
                                 </p>
+                                {% set rating = slide.rating.average_rating / 2 %}
                                 <div class="rating mt-5">
-                                    <i class="fas fa-star white-text"></i>
-                                    <i class="fas fa-star white-text"></i>
-                                    <i class="fas fa-star white-text"></i>
-                                    <i class="fas fa-star white-text"></i>
-                                    <i class="far fa-star"></i>
-                                    <span class="white-text ms-3">Lorem ipsum dir amet</span>
+                                    {% for i in range(rating | int) %}
+                                    <span class="fas fa-star white-text"></span>
+                                    {% endfor %}
+                                    {% if not (rating | float).is_integer() %}
+                                    <span class="fas fa-star-half-alt white-text"></span>
+                                    {% endif %}
+                                    {% for i in range((5 - rating) | int) %}
+                                    <span class="fas fa-star passive"></span>
+                                    {% endfor %}
+                                    <span class="white-text ms-3">
+                                        {{ '{:,}'.format(slide.rating.num_votes) }} votes
+                                    </span>
                                 </div>
                                 <button type="button" class="btn btn-light mt-5">
-                                    Lorem ipsum
+                                    Get Recommendations
                                 </button>
                             </div>
                         </div>
                     </div>
-                    <div class="carousel-item">
-                        <h3 class="white-text mt-3">
-                            Lorem ipsum dolor sit amet, consectetuer adipiscing elit.
-                        </h3>
-                        <p class="white-text">
-                            Lorem ipsum dolor sit amet, consectetuer adipiscing elit.
-                        </p>
-                        <div class="row mt-5">
-                            <div class="col-12 col-md-6 col-xl-6">
-                                <img class="fade-image" src="/assets/images/tenet.jpg" alt="">
-                            </div>
-                            <div class="col-12 col-md-6 col-xl-6">
-                                <h5 class="white-text mt-3">
-                                    Lorem ipsum dolor sit amet, consectetuer adipiscing elit.
-                                </h5>
-                                <h5 class="white-text mt-3">
-                                    Lorem, ipsum, dolor
-                                </h5>
-                                <p class="white-text mt-4">
-                                    Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-                                    Quisque quis facilisis velit.
-                                    Nunc justo lorem, feugiat molestie faucibus ac, consequat nec magna.
-                                </p>
-                                <div class="rating mt-5">
-                                    <i class="fas fa-star white-text"></i>
-                                    <i class="fas fa-star white-text"></i>
-                                    <i class="fas fa-star white-text"></i>
-                                    <i class="fas fa-star white-text"></i>
-                                    <i class="far fa-star"></i>
-                                    <span class="white-text ms-3">Lorem ipsum dir amet</span>
-                                </div>
-                                <button type="button" class="btn btn-light mt-5">
-                                    Lorem ipsum
-                                </button>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="carousel-item">
-                        <h3 class="white-text mt-3">
-                            Lorem ipsum dolor sit amet, consectetuer adipiscing elit.
-                        </h3>
-                        <p class="white-text">
-                            Lorem ipsum dolor sit amet, consectetuer adipiscing elit.
-                        </p>
-                        <div class="row mt-5">
-                            <div class="col-12 col-md-6 col-xl-6">
-                                <img class="fade-image" src="/assets/images/tenet.jpg" alt="">
-                            </div>
-                            <div class="col-12 col-md-6 col-xl-6">
-                                <h5 class="white-text mt-3">
-                                    Lorem ipsum dolor sit amet, consectetuer adipiscing elit.
-                                </h5>
-                                <h5 class="white-text mt-3">
-                                    Lorem, ipsum, dolor
-                                </h5>
-                                <p class="white-text mt-4">
-                                    Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-                                    Quisque quis facilisis velit.
-                                    Nunc justo lorem, feugiat molestie faucibus ac, consequat nec magna.
-                                </p>
-                                <div class="rating mt-5">
-                                    <i class="fas fa-star white-text"></i>
-                                    <i class="fas fa-star white-text"></i>
-                                    <i class="fas fa-star white-text"></i>
-                                    <i class="fas fa-star white-text"></i>
-                                    <i class="far fa-star"></i>
-                                    <span class="white-text ms-3">Lorem ipsum dir amet</span>
-                                </div>
-                                <button type="button" class="btn btn-light mt-5">
-                                    Lorem ipsum
-                                </button>
-                            </div>
-                        </div>
-                    </div>
+                    {% endfor %}
                 </div>
             </div>
         </div>
     </div>
 </div>
 <div class="container mb-5 mt-5">
-    <h5 class="text-muted mb-4">LOREM IPSUM DOLOR SIT AMET</h5>
+    <h5 class="text-muted mb-4">HIT MOVIES</h5>
     <div class="row">
         <div class="container-fluid">
             <div class="d-flex flex-row flex-nowrap overflow-auto">
+                {% for movie in grid_movies %}
                 <div class="card card-scroll">
-                    <img src="/assets/images/tenet.jpg" class="card-img-top" alt="">
+                    <img src="{{ movie.basic.horizontal_image }}" class="card-img-top"
+                        alt="{{ movie.basic.original_title }}" style="height: 100%;">
+                    <a href="#" class="stretched-link"></a>
                 </div>
-                <div class="card card-scroll">
-                    <img src="/assets/images/tenet.jpg" class="card-img-top" alt="">
-                </div>
-                <div class="card card-scroll">
-                    <img src="/assets/images/tenet.jpg" class="card-img-top" alt="">
-                </div>
-                <div class="card card-scroll">
-                    <img src="/assets/images/tenet.jpg" class="card-img-top" alt="">
-                </div>
-                <div class="card card-scroll">
-                    <img src="/assets/images/tenet.jpg" class="card-img-top" alt="">
-                </div>
+                {% endfor %}
             </div>
         </div>
     </div>
     <div class="row mt-5">
         <h5 class="text-muted mb-4">LOREM IPSUM DOLOR SIT AMET</h5>
+        {% for card in card_movies %}
         <div class="col-12 col-lg-3 col-md-3 mb-3">
             <div class="card">
-                <img src="/assets/images/got.jpg" class="card-img-top" alt="">
+                <img src="{{ card.basic.image_url }}" class="card-img-top" alt="">
                 <div class="card-body">
                     <p class="card-text">
-                        Lorem Ipsum Dolor Sit
+                        {{ card.basic.original_title }}
                     </p>
                 </div>
+                <a href="#" class="stretched-link"></a>
             </div>
         </div>
-        <div class="col-12 col-lg-3 col-md-3 mb-3">
-            <div class="card">
-                <img src="/assets/images/got.jpg" class="card-img-top" alt="">
-                <div class="card-body">
-                    <p class="card-text">
-                        Lorem Ipsum Dolor Sit Amet: Consectetuer
-                    </p>
-                </div>
-            </div>
-        </div>
-        <div class="col-12 col-lg-3 col-md-3 mb-3">
-            <div class="card">
-                <img src="/assets/images/got.jpg" class="card-img-top" alt="">
-                <div class="card-body">
-                    <p class="card-text">
-                        Lorem Ipsum Dolor Sit
-                    </p>
-                </div>
-            </div>
-        </div>
-        <div class="col-12 col-lg-3 col-md-3 mb-3">
-            <div class="card">
-                <img src="/assets/images/got.jpg" class="card-img-top" alt="">
-                <div class="card-body">
-                    <p class="card-text">
-                        Lorem Ipsum Dolor Sit
-                    </p>
-                </div>
-            </div>
-        </div>
+        {% endfor %}
     </div>
 </div>
 {% endblock %}

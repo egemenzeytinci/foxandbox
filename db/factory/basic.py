@@ -1,5 +1,6 @@
+from attrdict import AttrDict
 from db import get_session
-from db.model import Basic
+from db.model import Basic, Rating, TitleType
 
 
 class BasicFactory:
@@ -20,6 +21,51 @@ class BasicFactory:
 
         try:
             return session.query(Basic).filter(*filters).all()
+        finally:
+            session.close()
+
+    def get_by_limit_and_offset(self, offset=0, limit=10):
+        """
+        Get movies by random and day of the month
+
+        :return: list of movies
+        :rtype: list[Basic, Rating]
+        """
+        b = Basic
+        r = Rating
+        tt = TitleType
+
+        session = get_session()
+
+        filters = [
+            r.num_votes >= 100000,
+            r.average_rating >= 7.0,
+            b.description.isnot(None),
+            b.horizontal_image.isnot(None),
+            b.title_type == tt.get('movie'),
+            b.start_year > 1990,
+        ]
+
+        try:
+            rows = session \
+                .query(b, r) \
+                .join(r, b.title_id == r.title_id) \
+                .filter(*filters) \
+                .order_by(b.title_id) \
+                .offset(offset * limit) \
+                .limit(limit) \
+                .all()
+
+            results = []
+
+            for row in rows:
+                a = AttrDict()
+                a.basic = row[0]
+                a.rating = row[1]
+
+                results.append(a)
+
+            return results
         finally:
             session.close()
 
