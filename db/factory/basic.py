@@ -28,6 +28,8 @@ class BasicFactory:
         """
         Get movies by random and day of the month
 
+        :param int offset: offset
+        :param int limit: limit
         :return: list of movies
         :rtype: list[Basic, Rating]
         """
