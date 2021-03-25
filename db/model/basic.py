@@ -1,7 +1,7 @@
 from attrdict import AttrDict
 from db import Base
 from enum import Enum
-from sqlalchemy import Boolean, Column, Integer, SmallInteger, String, Text
+from sqlalchemy import Boolean, Column, Date, Integer, SmallInteger, String, Text
 from sqlalchemy.types import ARRAY as Array
 import re
 
@@ -33,9 +33,10 @@ class Basic(Base):
     end_year = Column('end_year', Integer)
     runtime = Column('runtime', Integer)
     genres = Column('genres', Array(String(10)))
-    description = Column(Text)
-    image_url = Column(Text)
-    horizontal_image = Column(Text)
+    description = Column('description', Text)
+    image_url = Column('image_url', Text)
+    horizontal_image = Column('horizontal_image', Text)
+    published_date = Column('published_date', Date)
     cluster = Column('cluster', Integer)
     is_crawled = Column('is_crawled', Boolean, default=False, index=True)
 

@@ -1,5 +1,6 @@
 from attrdict import AttrDict
 from bs4 import BeautifulSoup
+from datetime import date
 from db.model import Basic
 from util.config import config
 from util.log import logger
@@ -39,22 +40,46 @@ def parse(content):
     return AttrDict(json.loads(full_info))
 
 
-def get_image_and_description(info):
+def get_information(path):
     """
-    Get movie poster and description
+    Get movie information by path
+
+    :param str path: the url for crawling
+    :return: response json
+    :rtype: json
+    """
+    resp = get_page(path)
+    soup = BeautifulSoup(resp, 'html.parser')
+
+    return parse(soup)
+
+
+def get_poster(info):
+    """
+    Get movie poster
 
     :param json info: movie json
-    :return: image and description
-    :rtype: tuple
+    :return: image url
+    :rtype: str
     """
-    img = description = None
+    if 'image' not in info.keys():
+        return
 
-    if 'image' in info.keys():
-        img = info.image
-    if 'description' in info.keys():
-        description = info.description
+    return info.image
 
-    return img, description
+
+def get_description(info):
+    """
+    Get movie description
+
+    :param json info: movie json
+    :return: description
+    :rtype: str
+    """
+    if 'description' not in info.keys():
+        return
+
+    return info.description
 
 
 def get_horizontal_image(info):
@@ -83,18 +108,18 @@ def get_horizontal_image(info):
     return first_img.url
 
 
-def get_information(path):
+def get_published_date(info):
     """
-    Get movie information by path
+    Get published date of the movie
 
-    :param str path: the url for crawling
-    :return: response json
-    :rtype: json
+    :param json info: the json which contains movie images
+    :return: published date
+    :rtype: datetime.date
     """
-    resp = get_page(path)
-    soup = BeautifulSoup(resp, 'html.parser')
+    if 'datePublished' not in info.keys():
+        return
 
-    return parse(soup)
+    return date.fromisoformat(info.datePublished)
 
 
 def append(movie_id):
@@ -102,23 +127,30 @@ def append(movie_id):
     Create beautiful soup
 
     :param str movie_id: movie id like tt0000001
-    :return: image, description and horizontal image
+    :return: image, description, horizontal image and published date
     :rtype: tuple
     """
-    img = description = horizontal_image = None
+    movie = AttrDict()
+
     try:
+        movie.title_id = movie_id
+
         path = f'{BASE_PATH}/{movie_id}'
         info = get_information(path)
-        img, description = get_image_and_description(info)
+
+        # extract movie information from the json
+        movie.img = get_poster(info)
+        movie.description = get_description(info)
+        movie.published_date = get_published_date(info)
 
         path = f'{BASE_PATH}/{movie_id}/mediaindex'
         info = get_information(path)
-        horizontal_image = get_horizontal_image(info)
+        movie.horizontal_image = get_horizontal_image(info)
     except BaseException as e:
         logger.error(e)
         time.sleep(10)
 
-    return movie_id, img, description, horizontal_image
+    return movie
 
 
 def crawl(ids):
@@ -138,10 +170,11 @@ def crawl(ids):
     for record in records:
         # create instance
         instance = Basic()
-        instance.title_id = record[0]
-        instance.image_url = record[1]
-        instance.description = record[2]
-        instance.horizontal_image = record[3]
+        instance.title_id = record.title_id
+        instance.image_url = record.img
+        instance.description = record.description
+        instance.horizontal_image = record.horizontal_image
+        instance.published_date = record.published_date
         instance.is_crawled = True
 
         instances.append(instance)
