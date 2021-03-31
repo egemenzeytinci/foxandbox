@@ -16,7 +16,7 @@ class BasicFactory:
 
         filters = [
             Basic.title_id.in_(ids),
-            Basic.is_crawled.is_(False),
+            Basic.published_date.is_(None),
         ]
 
         try:

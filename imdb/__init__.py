@@ -11,6 +11,7 @@ import time
 import tqdm
 
 BASE_PATH = ' http://www.imdb.com/title'
+USER_AGENT = 'Mozilla/5.0 (Windows NT 6.0; WOW64; rv:24.0) Gecko/20100101 Firefox/24.0'
 
 
 def get_page(path):
@@ -20,7 +21,8 @@ def get_page(path):
     :return: http response
     :rtype: str
     """
-    resp = requests.get(path)
+    headers = {'User-Agent': USER_AGENT}
+    resp = requests.get(path, headers=headers)
 
     return resp.text if resp.status_code == 200 else None
 
@@ -147,7 +149,7 @@ def append(movie_id):
         info = get_information(path)
         movie.horizontal_image = get_horizontal_image(info)
     except BaseException as e:
-        logger.error(e)
+        logger.error(f'{e} for title_id={movie_id}')
         time.sleep(10)
 
     return movie
@@ -168,13 +170,16 @@ def crawl(ids):
 
     instances = []
     for record in records:
+        if not record.get('title_id'):
+            continue
+
         # create instance
         instance = Basic()
-        instance.title_id = record.title_id
-        instance.image_url = record.img
-        instance.description = record.description
-        instance.horizontal_image = record.horizontal_image
-        instance.published_date = record.published_date
+        instance.title_id = record.get('title_id')
+        instance.image_url = record.get('img')
+        instance.description = record.get('description')
+        instance.horizontal_image = record.get('horizontal_image')
+        instance.published_date = record.get('published_date')
         instance.is_crawled = True
 
         instances.append(instance)
