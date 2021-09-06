@@ -33,6 +33,8 @@ class Seed:
             'audiobook',
             'radioSeries',
             'episode',
+            'radioEpisode',
+            'tvPilot',
         ]
 
         # non-boolean values
