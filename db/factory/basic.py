@@ -90,6 +90,7 @@ class BasicFactory:
             b.description.isnot(None),
             b.horizontal_image.isnot(None),
             b.title_type == tt.get('movie'),
+            b.published_date.isnot(None),
         ]
 
         try:
