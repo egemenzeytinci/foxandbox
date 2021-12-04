@@ -1,0 +1,103 @@
+{% extends 'layout.html' %}
+{% block style %}
+    <link rel="stylesheet" type="text/css" href="/assets/css/detail.css"/>
+{% endblock %}
+{% block content %}
+    <div class="container">
+        <div class="row mt-4">
+            <div class="col-6">
+                <span class="fw-bold">
+                    {{ original.basic.original_title }}
+                </span>
+                <div class="rating mt-2">
+                    <span class="mt-2">
+                        {{ ', '.join(original.basic.genres) }}
+                    </p>
+                </div>
+            </div>
+            <div class="col-6 text-end">
+                <span class="text-muted">
+                    {{ '{:,}'.format(original.rating.num_votes) }}
+                    Votes
+                </span>
+                {% set rating = original.rating.average_rating / 2 %}
+                <div class="rating">
+                    {% for i in range(rating | int) %}
+                        <span class="fas fa-star"></span>
+                    {% endfor %}
+                    {% if not(rating | float).is_integer() %}
+                        <span class="fas fa-star-half-alt"></span>
+                    {% endif %}
+                    {% for i in range((5 - rating) | int) %}
+                        <span class="far fa-star"></span>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-12 col-lg-3 mt-2">
+                <img class="card-img-top" src="{{ original.basic.image_url }}">
+            </div>
+            <div class="col-12 col-lg-6 mt-2 d-none d-lg-block">
+                <img class="card-img-top" src="{{ original.basic.horizontal_image }}">
+            </div>
+            <div class="col-12 col-lg-3 text-center mt-2">
+                <div class="card card-information p-3">
+                    <ul class="list-group list-group-flush">
+                        <li class="list-group-item bg-transparent border-0">
+                            Start Year<br>
+                            {{ original.basic.start_year }}
+                        </li>
+                        <li class="list-group-item bg-transparent border-0">
+                            End Year<br>
+                            {% if original.basic.end_year %}
+                                {{ original.basic.end_year }}
+                            {% else %}
+                                &mdash;
+                            {% endif %}
+                        </li>
+                        <li class="list-group-item bg-transparent border-0">
+                            Length<br>
+                            {{ f_minute(original.basic.runtime) }}
+                        </li>
+                        <li class="list-group-item bg-transparent border-0">
+                            &mdash;<br>
+                            &mdash;
+                        </li>
+                        <li class="list-group-item bg-transparent border-0">
+                            &mdash;<br>
+                            &mdash;
+                        </li>
+                    </ul>
+                </div>
+                <div class="mt-4 d-none d-lg-block">
+                    We have 12 similar movies for you
+                    <button type="button" class="btn btn-primary mt-3 w-100">
+                        Show movies
+                    </button>
+                </div>
+            </div>
+        </div>
+        <div class="row mt-4">
+            <h5 class="text-muted mb-4">DESCRIPTION</h5>
+            <p>{{ unescape(original.basic.description) if original.basic.description else '' }}</p>
+        </div>
+        <div class="row mt-4">
+            <h5 class="text-muted mb-4">RECOMMENDATIONS</h5>
+            {% for r in recommendations %}
+                <div class="col-12 col-lg-3 col-md-3 mb-3">
+                    <div class="card">
+                        <img src="{{ r.basic.image_url }}" class="card-img-top" alt="">
+                        <div class="card-body">
+                            <p class="card-text">
+                                {{ r.basic.original_title }}
+                            </p>
+                        </div>
+                        <a href="/detail/{{ r.basic.title_id }}" class="stretched-link" target="_blank">
+                        </a>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+{% endblock %}

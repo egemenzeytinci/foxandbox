@@ -65,7 +65,7 @@ def get_poster(info):
     :rtype: str
     """
     if 'image' not in info.keys():
-        return
+        return None
 
     return info.image
 
@@ -79,7 +79,7 @@ def get_description(info):
     :rtype: str
     """
     if 'description' not in info.keys():
-        return
+        return None
 
     return info.description
 
@@ -93,7 +93,7 @@ def get_horizontal_image(info):
     :rtype: str
     """
     if 'image' not in info.keys():
-        return
+        return None
 
     # returns dictionary if only one picture, otherwise list
     if isinstance(info.image, dict):
@@ -105,7 +105,7 @@ def get_horizontal_image(info):
     width, height = int(first_img.width), int(first_img.height)
 
     if not 1.33 < width / height < 1.66:
-        return
+        return None
 
     return first_img.url
 
@@ -119,7 +119,7 @@ def get_published_date(info):
     :rtype: datetime.date
     """
     if 'datePublished' not in info.keys():
-        return
+        return None
 
     return date.fromisoformat(info.datePublished)
 

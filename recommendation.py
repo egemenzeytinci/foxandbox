@@ -1,9 +1,9 @@
-from recommendation.cluster import Cluster
+from recommendation import Cluster
 
 
 def main():
-    cluster = Cluster()
-    cluster.clustering()
+    c = Cluster()
+    c.clustering()
 
 
 if __name__ == '__main__':

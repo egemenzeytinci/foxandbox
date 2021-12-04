@@ -1,100 +1,98 @@
 {% extends 'layout.html' %}
 
 {% block style %}
-<link rel="stylesheet" type="text/css" href="/assets/css/home.css" />
+    <link rel="stylesheet" type="text/css" href="/assets/css/home.css"/>
 {% endblock %}
 
 {% block content %}
-<div class="carousel-area pb-5">
-    <div class="container">
-        <div class="row">
-            <div id="carouselExampleFade" class="carousel slide carousel-fade" data-bs-ride="carousel">
-                <div class="carousel-inner">
-                    {% for slide in slides %}
-                    <div class="carousel-item {{ 'active' if loop.index == 1 else '' }}">
-                        <h3 class="white-text mt-3">
-                            The fox out of the box!
-                        </h3>
-                        <p class="white-text">
-                            Which fox will come out of the box tonight? 
-                            Now, find movies similar to the movie you liked before.
-                        </p>
-                        <div class="row mt-5">
-                            <div class="col-12 col-md-6 col-xl-6">
-                                <img class="fade-image" src="{{ slide.basic.horizontal_image }}"
-                                    alt="{{ slide.basic.original_title }}">
-                            </div>
-                            <div class="col-12 col-md-6 col-xl-6">
-                                <a href="#" class="stretched-link"></a>
-                                <h5 class="white-text mt-3">
-                                    {{ slide.basic.original_title }}
-                                </h5>
-                                <h5 class="white-text mt-3">
-                                    {{ ', '.join(slide.basic.genres) }}
-                                </h5>
-                                <p class="white-text mt-4">
-                                    {{ slide.basic.description }}
+    <div class="carousel-area pb-5">
+        <div class="container">
+            <div class="row">
+                <div id="carouselExampleFade" class="carousel slide carousel-fade" data-bs-ride="carousel">
+                    <div class="carousel-inner">
+                        {% for slide in slides %}
+                            <div class="carousel-item {{ 'active' if loop.index == 1 else '' }}">
+                                <h3 class="white-text mt-3">
+                                    The fox out of the box!
+                                </h3>
+                                <p class="white-text">
+                                    Which fox will come out of the box tonight? Now, find movies similar to the movie you liked before.
                                 </p>
-                                {% set rating = slide.rating.average_rating / 2 %}
-                                <div class="rating mt-5">
-                                    {% for i in range(rating | int) %}
-                                    <span class="fas fa-star white-text"></span>
-                                    {% endfor %}
-                                    {% if not (rating | float).is_integer() %}
-                                    <span class="fas fa-star-half-alt white-text"></span>
-                                    {% endif %}
-                                    {% for i in range((5 - rating) | int) %}
-                                    <span class="fas fa-star passive"></span>
-                                    {% endfor %}
-                                    <span class="white-text ms-3">
-                                        {{ '{:,}'.format(slide.rating.num_votes) }} votes
-                                    </span>
+                                <div class="row mt-5">
+                                    <div class="col-12 col-md-6 col-xl-6">
+                                        <img class="fade-image" src="{{ slide.basic.horizontal_image }}" alt="{{ slide.basic.original_title }}">
+                                    </div>
+                                    <div class="col-12 col-md-6 col-xl-6">
+                                        <a href="#" class="stretched-link"></a>
+                                        <h5 class="white-text mt-3">
+                                            {{ slide.basic.original_title }}
+                                        </h5>
+                                        <h5 class="white-text mt-3">
+                                            {{ ', '.join(slide.basic.genres) }}
+                                        </h5>
+                                        <p class="white-text mt-4">
+                                            {{ unescape(slide.basic.description) }}
+                                        </p>
+                                        {% set rating = slide.rating.average_rating / 2 %}
+                                        <div class="rating mt-4">
+                                            {% for i in range(rating | int) %}
+                                                <span class="fas fa-star white-text"></span>
+                                            {% endfor %}
+                                            {% if not(rating | float).is_integer() %}
+                                                <span class="fas fa-star-half-alt white-text"></span>
+                                            {% endif %}
+                                            {% for i in range((5 - rating) | int) %}
+                                                <span class="fas fa-star passive"></span>
+                                            {% endfor %}
+                                            <span class="white-text ms-3">
+                                                {{ '{:,}'.format(slide.rating.num_votes) }}
+                                                votes
+                                            </span>
+                                        </div>
+                                        <button type="button" class="btn btn-light mt-4">
+                                            Get Recommendations
+                                        </button>
+                                    </div>
                                 </div>
-                                <button type="button" class="btn btn-light mt-5">
-                                    Get Recommendations
-                                </button>
                             </div>
-                        </div>
+                        {% endfor %}
                     </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="container mb-5 mt-5">
+        <h5 class="text-muted mb-4">HIT MOVIES</h5>
+        <div class="row">
+            <div class="container-fluid">
+                <div class="d-flex flex-row flex-nowrap overflow-auto">
+                    {% for movie in grid_movies %}
+                        <div class="card card-scroll">
+                            <img src="{{ movie.basic.horizontal_image }}" class="card-img-top h-100" alt="{{ movie.basic.original_title }}">
+                            <a href="/detail/{{ movie.basic.title_id }}" class="stretched-link"></a>
+                        </div>
                     {% endfor %}
                 </div>
             </div>
         </div>
-    </div>
-</div>
-<div class="container mb-5 mt-5">
-    <h5 class="text-muted mb-4">HIT MOVIES</h5>
-    <div class="row">
-        <div class="container-fluid">
-            <div class="d-flex flex-row flex-nowrap overflow-auto">
-                {% for movie in grid_movies %}
-                <div class="card card-scroll">
-                    <img src="{{ movie.basic.horizontal_image }}" class="card-img-top"
-                        alt="{{ movie.basic.original_title }}" style="height: 100%;">
-                    <a href="#" class="stretched-link"></a>
+        <div class="row mt-5">
+            <h5 class="text-muted mb-4">NEW RELEASE</h5>
+            {% for card in card_movies %}
+                <div class="col-12 col-lg-3 col-md-3 mb-3">
+                    <div class="card">
+                        <img src="{{ card.basic.image_url }}" class="card-img-top" alt="">
+                        <div class="card-body">
+                            <p class="card-text">
+                                {{ card.basic.original_title }}
+                            </p>
+                        </div>
+                        <a href="/detail/{{ card.basic.title_id }}" class="stretched-link"></a>
+                    </div>
                 </div>
-                {% endfor %}
-            </div>
+            {% endfor %}
         </div>
     </div>
-    <div class="row mt-5">
-        <h5 class="text-muted mb-4">NEW RELEASE</h5>
-        {% for card in card_movies %}
-        <div class="col-12 col-lg-3 col-md-3 mb-3">
-            <div class="card">
-                <img src="{{ card.basic.image_url }}" class="card-img-top" alt="">
-                <div class="card-body">
-                    <p class="card-text">
-                        {{ card.basic.original_title }}
-                    </p>
-                </div>
-                <a href="#" class="stretched-link"></a>
-            </div>
-        </div>
-        {% endfor %}
-    </div>
-</div>
 {% endblock %}
 {% block script %}
-<script src="/assets/js/home.js"></script>
+    <script src="/assets/js/home.js"></script>
 {% endblock %}
