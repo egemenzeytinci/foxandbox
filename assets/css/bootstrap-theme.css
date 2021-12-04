@@ -29,8 +29,6 @@ h5 {
 .card-img-top {
     width: 100%;
     height: 425px;
-    border-top-left-radius: calc(.25rem - 1px);
-    border-top-right-radius: calc(.25rem - 1px);
 }
 
 .btn-primary, .btn-primary:hover, .btn-primary:active, .btn-primary:focus {

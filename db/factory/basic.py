@@ -12,7 +12,7 @@ class BasicFactory:
 
         :param str title_id: title id
         :return: basic object
-        :rtype: db.model.Basic or None
+        :rtype: attrdict.AttrDict
         """
         session = get_session()
 
