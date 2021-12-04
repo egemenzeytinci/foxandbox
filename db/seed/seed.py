@@ -3,6 +3,7 @@ from csv import DictReader
 from db import engine
 from db.model import Basic, Episode, Rating, TitleType
 from sqlalchemy.exc import IntegrityError
+from util.config import config
 from util.log import logger
 from termcolor import colored
 import gzip
@@ -51,7 +52,7 @@ class Seed:
         :param db.Base table: table definition
         :param str file_name: source file name
         """
-        path = f'/tmp/imdb/title.{file_name}.tsv.gz'
+        path = f'{config.system.temporary}/title.{file_name}.tsv.gz'
 
         # get table name
         table_name = table.__tablename__

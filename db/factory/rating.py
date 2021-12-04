@@ -14,10 +14,13 @@ class RatingFactory:
         """
         session = get_session()
 
+        # order by popularity
+        order = (Rating.num_votes * Rating.average_rating).desc()
+
         try:
             return session \
                 .query(Rating) \
-                .order_by(Rating.title_id) \
+                .order_by(order) \
                 .limit(limit) \
                 .offset(offset * limit) \
                 .all()

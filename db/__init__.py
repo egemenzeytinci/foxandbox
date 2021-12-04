@@ -1,4 +1,4 @@
-from sqlalchemy import create_engine
+from sqlalchemy import create_engine, inspect
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import sessionmaker
 from util.config import config
@@ -34,6 +34,8 @@ def get_session():
 
 # get default engine from db configuration
 engine = get_engine()
+
+insp = inspect(engine)
 
 Base = declarative_base()
 SessionItem = sessionmaker(bind=engine, autocommit=False)

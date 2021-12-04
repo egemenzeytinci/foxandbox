@@ -5,7 +5,7 @@ from db.model import Basic, Rating
 class ScoreFactory:
     def get_all(self):
         """
-        Get features about the scoring
+        Get data contains score features
 
         :return: list of ratings and basics features
         :rtype: list
@@ -22,6 +22,8 @@ class ScoreFactory:
 
         filters = [
             Basic.is_crawled.is_(True),
+            Basic.runtime.isnot(None),
+            Basic.start_year.isnot(None),
             Basic.runtime.isnot(None),
         ]
 

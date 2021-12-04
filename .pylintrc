@@ -1,0 +1,52 @@
+[config]
+
+# Ingore defined errors and warnings
+disable=
+    invalid-name,
+    missing-module-docstring,
+    missing-class-docstring,
+    missing-function-docstring,
+    wrong-import-order,
+    unidiomatic-typecheck,
+    no-self-use,
+    ungrouped-imports,
+    too-many-instance-attributes,
+    duplicate-code,
+    too-many-branches,
+    too-few-public-methods,
+    too-many-return-statements,
+    logging-not-lazy,
+    broad-except,
+    too-many-locals,
+    logging-fstring-interpolation,
+    redefined-outer-name,
+    redefined-builtin,
+    raise-missing-from,
+    too-many-statements,
+    deprecated-method,
+    super-with-arguments,
+    consider-using-with,
+    unspecified-encoding,
+    c-extension-no-member
+
+# Do not check given classes
+# They returns E1101 error (no-member)
+ignored-classes=BaseForm, MinimalHandler, ModelType
+
+# Max length is 100 characters
+max-line-length=100
+
+# Max argument limit is 10 for functions and methods
+max-args=10
+
+# Define SQLAlchemy methods
+generated-members=
+    session.commit,
+    session.query,
+    session.close,
+    session.rollback,
+    session.add,
+    session.delete,
+    session.merge,
+    session.refresh,
+    app.jinja_env.globals

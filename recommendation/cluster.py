@@ -23,7 +23,7 @@ class Cluster:
         """
         sf = ScoreFactory()
 
-        # get data which contains features
+        # get data contains score features
         records = sf.get_all()
 
         scores = []
@@ -80,6 +80,7 @@ class Cluster:
 
         # update basic objects
         instances = []
+
         for title_id, cluster in zip(result.title_ids, clusters):
             basic = Basic()
             basic.title_id = title_id
