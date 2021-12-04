@@ -10,7 +10,7 @@
                     {{ original.basic.original_title }}
                 </span>
                 <div class="rating mt-2">
-                    <span class="mt-2">
+                    <span>
                         {{ ', '.join(original.basic.genres) }}
                     </p>
                 </div>
@@ -21,7 +21,7 @@
                     Votes
                 </span>
                 {% set rating = original.rating.average_rating / 2 %}
-                <div class="rating">
+                <div class="rating mt-2">
                     {% for i in range(rating | int) %}
                         <span class="fas fa-star"></span>
                     {% endfor %}
