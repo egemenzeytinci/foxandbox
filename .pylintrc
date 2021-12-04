@@ -50,4 +50,3 @@ generated-members=
     session.merge,
     session.refresh,
     app.jinja_env.globals
-
