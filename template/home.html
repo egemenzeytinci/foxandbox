@@ -11,7 +11,7 @@
                 <div id="carouselExampleFade" class="carousel slide carousel-fade" data-bs-ride="carousel">
                     <div class="carousel-inner">
                         {% for slide in slides %}
-                            <div class="carousel-item {{ 'active' if loop.index == 1 else '' }}">
+                            <div class="carousel-item {{ 'active' if loop.index == 1 else '' }}" data-bs-interval="5000">
                                 <h3 class="white-text mt-3">
                                     The fox out of the box!
                                 </h3>
@@ -23,7 +23,7 @@
                                         <img class="fade-image" src="{{ slide.basic.horizontal_image }}" alt="{{ slide.basic.original_title }}">
                                     </div>
                                     <div class="col-12 col-md-6 col-xl-6">
-                                        <a href="#" class="stretched-link"></a>
+                                        <a href="/detail/{{ slide.basic.title_id }}" class="stretched-link" target="_blank"></a>
                                         <h5 class="white-text mt-3">
                                             {{ slide.basic.original_title }}
                                         </h5>
@@ -69,7 +69,7 @@
                     {% for movie in grid_movies %}
                         <div class="card card-scroll">
                             <img src="{{ movie.basic.horizontal_image }}" class="card-img-top h-100" alt="{{ movie.basic.original_title }}">
-                            <a href="/detail/{{ movie.basic.title_id }}" class="stretched-link"></a>
+                            <a href="/detail/{{ movie.basic.title_id }}" class="stretched-link" target="_blank"></a>
                         </div>
                     {% endfor %}
                 </div>
@@ -86,13 +86,10 @@
                                 {{ card.basic.original_title }}
                             </p>
                         </div>
-                        <a href="/detail/{{ card.basic.title_id }}" class="stretched-link"></a>
+                        <a href="/detail/{{ card.basic.title_id }}" class="stretched-link" target="_blank"></a>
                     </div>
                 </div>
             {% endfor %}
         </div>
     </div>
-{% endblock %}
-{% block script %}
-    <script src="/assets/js/home.js"></script>
 {% endblock %}

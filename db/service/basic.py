@@ -5,7 +5,7 @@ from sqlalchemy import cast, func, String
 from sqlalchemy.dialects.postgresql import array, ARRAY
 
 
-class BasicFactory:
+class BasicService:
     def get_by_id(self, title_id):
         """
         Get basic object by given id
