@@ -2,7 +2,7 @@ from db import get_session
 from db.model import Rating
 
 
-class RatingFactory:
+class RatingService:
     def get_by_offset(self, limit=500, offset=0):
         """
         Get rating objects by page

@@ -1,6 +1,6 @@
 from attrdict import AttrDict
 from datetime import date
-from db.factory import BasicFactory
+from db.service import BasicService
 from flask import Blueprint, render_template
 from server import app
 from validation.detail import DetailGetForm
@@ -17,19 +17,19 @@ def get_home():
 
     :rtype: flask.Response
     """
-    bf = BasicFactory()
+    bs = BasicService()
 
     # get day number of today
     day = date.today().day
 
     # get 10 movies for the slider
-    slides = bf.get_by_limit_and_offset(offset=day - 1)
+    slides = bs.get_by_limit_and_offset(offset=day - 1)
 
     # get other 10 movies for the scrollable grid
-    grid_movies = bf.get_by_limit_and_offset(offset=day)
+    grid_movies = bs.get_by_limit_and_offset(offset=day)
 
     # get other 8 movies for the card items
-    card_movies = bf.get_new_released_movies()
+    card_movies = bs.get_new_released_movies()
 
     r = AttrDict()
 
@@ -60,10 +60,10 @@ def get_detail(title_id):
 
         return render_template('error.html', message=message)
 
-    bf = BasicFactory()
+    bs = BasicService()
 
     # get base movie by title id
-    original = bf.get_by_id(title_id)
+    original = bs.get_by_id(form.title_id.data)
 
     if original is None:
         message = 'The movie could not found.'
@@ -71,7 +71,7 @@ def get_detail(title_id):
         return render_template('error.html', message=message)
 
     # get recommendations by base movie
-    recommendations = bf.get_recommendations(
+    recommendations = bs.get_recommendations(
         title_id=title_id,
         title_type=original.basic.title_type,
         cluster=original.basic.cluster,

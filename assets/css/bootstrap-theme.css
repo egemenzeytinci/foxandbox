@@ -45,6 +45,11 @@ h5 {
     border-color: #374785;
 }
 
+.error-icon {
+    font-size: 5em;
+    color: #374785;
+}
+
 @media (max-width: 992px) {
     .card {
         padding: 1rem!important;

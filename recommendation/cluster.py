@@ -1,6 +1,6 @@
 from attrdict import AttrDict
 from db.model import Basic
-from db.factory import BasicFactory, ScoreFactory
+from db.service import BasicService, ScoreService
 from scipy.signal import argrelextrema
 from sklearn.neighbors import KernelDensity
 from util.config import config
@@ -21,10 +21,10 @@ class Cluster:
         :return: scores and title ids
         :rtype: AttrDict
         """
-        sf = ScoreFactory()
+        ss = ScoreService()
 
         # get data contains score features
-        records = sf.get_all()
+        records = ss.get_all()
 
         scores = []
         title_ids = []
@@ -76,7 +76,7 @@ class Cluster:
         # assign clusters
         clusters = buckets.searchsorted(scores)
 
-        bf = BasicFactory()
+        bs = BasicService()
 
         # update basic objects
         instances = []
@@ -88,4 +88,4 @@ class Cluster:
 
             instances.append(basic)
 
-        bf.save_all(instances)
+        bs.save_all(instances)

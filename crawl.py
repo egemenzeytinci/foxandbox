@@ -1,15 +1,15 @@
-from db.factory import BasicFactory, RatingFactory
+from db.service import BasicService, RatingService
 from imdb import crawl
 
 
 def main():
-    bf = BasicFactory()
-    rf = RatingFactory()
+    bs = BasicService()
+    rs = RatingService()
 
     offset = 0
 
     while True:
-        ratings = rf.get_by_offset(offset=offset)
+        ratings = rs.get_by_offset(offset=offset)
 
         # there is no record for the updating
         if len(ratings) == 0:
@@ -19,7 +19,7 @@ def main():
         rating_ids = [rating.title_id for rating in ratings]
 
         # get basic objects by title ids
-        basics = bf.get_by_ids(rating_ids)
+        basics = bs.get_by_ids(rating_ids)
 
         if len(basics) == 0:
             offset += 1
@@ -30,7 +30,7 @@ def main():
 
         # save updated objects
         updated_objects = crawl(ids)
-        bf.save_all(updated_objects)
+        bs.save_all(updated_objects)
 
         offset += 1
 

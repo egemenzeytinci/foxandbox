@@ -2,7 +2,7 @@ from db import get_session
 from db.model import Basic, Rating
 
 
-class ScoreFactory:
+class ScoreService:
     def get_all(self):
         """
         Get data contains score features
