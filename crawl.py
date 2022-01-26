@@ -2,7 +2,7 @@ from db.service import BasicService, RatingService
 from imdb import crawl
 
 
-def main():
+if __name__ == '__main__':
     bs = BasicService()
     rs = RatingService()
 
@@ -33,7 +33,3 @@ def main():
         bs.save_all(updated_objects)
 
         offset += 1
-
-
-if __name__ == '__main__':
-    main()

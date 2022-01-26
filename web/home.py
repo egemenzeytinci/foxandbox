@@ -85,3 +85,37 @@ def get_detail(title_id):
     r.recommendations = recommendations
 
     return render_template('detail.html', **r)
+
+
+@home.get('/lucky')
+def get_random():
+    """
+    Get lucky page
+
+    :rtype: flask.Response
+    """
+    bs = BasicService()
+
+    # get random movie
+    base = bs.get_by_random()
+
+    if base is None:
+        message = 'The movie could not found.'
+
+        return render_template('error.html', message=message)
+
+    # get recommendations by base movie
+    recommendations = bs.get_recommendations(
+        title_id=base.basic.title_id,
+        title_type=base.basic.title_type,
+        cluster=base.basic.cluster,
+        genre=base.basic.genres
+    )
+
+    r = AttrDict()
+
+    # set page parameters
+    r.original = base
+    r.recommendations = recommendations
+
+    return render_template('detail.html', **r)

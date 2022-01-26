@@ -105,6 +105,42 @@ class BasicService:
         finally:
             session.close()
 
+    def get_by_random(self):
+        """
+        Get movie by random
+
+        :return: random movie
+        :rtype: attrdict.AttrDict
+        """
+        session = get_session()
+
+        b = Basic
+        r = Rating
+
+        filters = [
+            r.num_votes >= 10000,
+            r.average_rating >= 6.0,
+            b.description.isnot(None),
+            b.horizontal_image.isnot(None),
+            b.published_date.isnot(None),
+        ]
+
+        try:
+            row = session \
+                .query(b, r) \
+                .join(r, b.title_id == r.title_id) \
+                .filter(*filters) \
+                .order_by(func.random()) \
+                .first()
+
+            a = AttrDict()
+            a.basic = row[0]
+            a.rating = row[1]
+
+            return a
+        finally:
+            session.close()
+
     def get_new_released_movies(self):
         """
         Get new relased movies
