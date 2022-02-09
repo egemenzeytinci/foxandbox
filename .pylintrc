@@ -2,6 +2,7 @@
 
 # Ingore defined errors and warnings
 disable=
+    attribute-defined-outside-init,
     invalid-name,
     missing-module-docstring,
     missing-class-docstring,
@@ -39,8 +40,10 @@ max-line-length=100
 # Max argument limit is 10 for functions and methods
 max-args=10
 
-# Define SQLAlchemy methods
 generated-members=
+    # elasticsearch-dsl
+    s.source,
+    # sqlalchemy
     session.commit,
     session.query,
     session.close,
@@ -49,4 +52,5 @@ generated-members=
     session.delete,
     session.merge,
     session.refresh,
+    # jinja
     app.jinja_env.globals

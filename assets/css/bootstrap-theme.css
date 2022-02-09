@@ -1,4 +1,9 @@
-body, input, .btn, .dropdown, .form-control, .dropdown-menu {
+body,
+input,
+.btn,
+.dropdown,
+.form-control,
+.dropdown-menu {
     font-size: .9rem;
 }
 
@@ -14,8 +19,8 @@ h5 {
     color: white;
 }
 
-.white-text {
-    color: white;
+.text-blue {
+    color: #374785;
 }
 
 .card {
@@ -31,7 +36,10 @@ h5 {
     height: 425px;
 }
 
-.btn-primary, .btn-primary:hover, .btn-primary:active, .btn-primary:focus {
+.btn-primary,
+.btn-primary:hover,
+.btn-primary:active,
+.btn-primary:focus {
     background-color: #374785;
     border-color: #374785;
     color: white;
@@ -40,7 +48,8 @@ h5 {
     outline: none;
 }
 
-.btn-primary:disabled, .btn-primary.disabled {
+.btn-primary:disabled,
+.btn-primary.disabled {
     background-color: #374785;
     border-color: #374785;
 }
@@ -52,6 +61,12 @@ h5 {
 
 @media (max-width: 992px) {
     .card {
-        padding: 1rem!important;
+        padding: 1rem !important;
     }
+}
+
+.pagination>.active>a {
+    color: white !important;
+    background-color: #374785 !important;
+    border: solid 1px #374785 !Important;
 }

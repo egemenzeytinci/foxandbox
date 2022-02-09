@@ -58,7 +58,7 @@ class BasicService:
         finally:
             session.close()
 
-    def get_by_limit_and_offset(self, offset=0, limit=10):
+    def get_by_limit_and_offset(self, offset=0, limit=10, is_home=True):
         """
         Get movies by random and day of the month
 
@@ -74,13 +74,17 @@ class BasicService:
         session = get_session()
 
         filters = [
-            r.num_votes >= 100000,
-            r.average_rating >= 7.0,
             b.description.isnot(None),
             b.horizontal_image.isnot(None),
-            b.title_type == tt.get('movie'),
-            b.start_year > 1990,
         ]
+
+        if is_home:
+            filters.extend([
+                r.num_votes >= 100000,
+                r.average_rating >= 7.0,
+                b.title_type == tt.get('movie'),
+                b.start_year > 1990,
+            ])
 
         try:
             rows = session \
@@ -233,6 +237,26 @@ class BasicService:
                 results.append(a)
 
             return results
+        finally:
+            session.close()
+
+    def get_genres(self):
+        """
+        Get all genres
+
+        :return: list of genres
+        :rtype: list
+        """
+        session = get_session()
+
+        column = func.distinct(func.unnest(Basic.genres)).label('genre')
+
+        try:
+            return session \
+                .query(column) \
+                .filter(Basic.title_type == TitleType.get('movie')) \
+                .order_by(column) \
+                .all()
         finally:
             session.close()
 
