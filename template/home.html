@@ -12,10 +12,10 @@
                     <div class="carousel-inner">
                         {% for slide in slides %}
                             <div class="carousel-item {{ 'active' if loop.index == 1 else '' }}" data-bs-interval="5000">
-                                <h3 class="white-text mt-3">
+                                <h3 class="text-white mt-3">
                                     The fox out of the box!
                                 </h3>
-                                <p class="white-text">
+                                <p class="text-white">
                                     Which fox will come out of the box tonight? Now, find movies similar to the movie you liked before.
                                 </p>
                                 <div class="row mt-5">
@@ -24,27 +24,27 @@
                                     </div>
                                     <div class="col-12 col-md-6 col-xl-6">
                                         <a href="/detail/{{ slide.basic.title_id }}" class="stretched-link" target="_blank"></a>
-                                        <h5 class="white-text mt-3">
+                                        <h5 class="text-white mt-3">
                                             {{ slide.basic.original_title }}
                                         </h5>
-                                        <h5 class="white-text mt-3">
+                                        <h5 class="text-white mt-3">
                                             {{ ', '.join(slide.basic.genres) }}
                                         </h5>
-                                        <p class="white-text mt-4">
+                                        <p class="text-white mt-4">
                                             {{ unescape(slide.basic.description) }}
                                         </p>
                                         {% set rating = slide.rating.average_rating / 2 %}
                                         <div class="rating mt-4">
                                             {% for i in range(rating | int) %}
-                                                <span class="fas fa-star white-text"></span>
+                                                <span class="fas fa-star text-white"></span>
                                             {% endfor %}
                                             {% if not(rating | float).is_integer() %}
-                                                <span class="fas fa-star-half-alt white-text"></span>
+                                                <span class="fas fa-star-half-alt text-white"></span>
                                             {% endif %}
                                             {% for i in range((5 - rating) | int) %}
                                                 <span class="fas fa-star passive"></span>
                                             {% endfor %}
-                                            <span class="white-text ms-3">
+                                            <span class="text-white ms-3">
                                                 {{ '{:,}'.format(slide.rating.num_votes) }}
                                                 votes
                                             </span>

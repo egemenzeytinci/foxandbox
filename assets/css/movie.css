@@ -1,0 +1,28 @@
+.btn-outline-secondary,
+.btn-outline-secondary:hover,
+.btn-primary:active,
+.btn-primary:focus {
+    border-color: #374785;
+    background-color: white;
+    color: black;
+    box-shadow: none;
+    outline: none;
+}
+
+.btn-check:checked+.btn-outline-secondary {
+    background-color: #374785;
+    box-shadow: none;
+}
+
+.btn-check:not(:checked)+.btn-outline-secondary {
+    box-shadow: none;
+}
+
+.form-check {
+    padding-left: 0.75rem;
+}
+
+.spinner-border {
+    width: 5rem;
+    height: 5rem;
+}

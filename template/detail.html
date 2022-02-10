@@ -1,7 +1,9 @@
 {% extends 'layout.html' %}
+
 {% block style %}
     <link rel="stylesheet" type="text/css" href="/assets/css/detail.css"/>
 {% endblock %}
+
 {% block content %}
     <div class="container">
         <div class="row mt-4">
@@ -58,7 +60,11 @@
                         </li>
                         <li class="list-group-item bg-transparent border-0">
                             Length<br>
-                            {{ f_minute(original.basic.runtime) }}
+                            {% if original.basic.runtime %}
+                                {{ f_minute(original.basic.runtime) }}
+                            {% else %}
+                                &mdash;
+                            {% endif %}                                
                         </li>
                         <li class="list-group-item bg-transparent border-0">
                             &mdash;<br>
@@ -100,6 +106,7 @@
         </div>
     </div>
 {% endblock %}
+
 {% block script %}
     <script src="/assets/js/detail.js"></script>
 {% endblock %}
