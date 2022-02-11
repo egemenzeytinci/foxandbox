@@ -32,6 +32,8 @@ def search():
     result = ebs.search(
         genres=form.genres.data,
         years=form.years.data,
+        score=form.score.data,
+        num_votes=form.num_votes.data,
         page=form.page.data,
         exact=False
     )

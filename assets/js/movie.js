@@ -20,13 +20,22 @@
         const cy = document.querySelectorAll('input[name=year]:checked');
         const years = [...cy].map(c => c.value);
 
+        // Checked score
+        const cs = document.querySelector('input[name=score]:checked');
+
+        // Checked number of votes
+        const cn = document.querySelector('input[name=num_votes]:checked');
+
         const xhr = new XMLHttpRequest();
 
         var formData = new FormData();
 
         // Form data for the request
-        formData.append('genres', genres);
-        formData.append('years', years);
+        if (genres.length > 0) formData.append('years', years);
+        if (years.length > 0) formData.append('years', years);
+        if (cs) formData.append('score', cs.value)
+        if (cn) formData.append('num_votes', cn.value)
+
         formData.append('page', page);
 
         xhr.open('POST', '/movie/search', false);

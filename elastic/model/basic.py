@@ -10,6 +10,7 @@ class Basic(Document):
     start_year = Integer()
     average_rating = Float()
     num_votes = Integer()
+    score = Float()
     title_type = Keyword()
 
     class Index:

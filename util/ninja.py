@@ -1,7 +1,21 @@
 import html
+import numpy as np
 
 
 class Ninja:
+    @staticmethod
+    def float_range(lower, upper, step):
+        """
+        Float range function
+
+        :param int lower: lower point
+        :param int upper: upper point
+        :param float step: step value
+        :return: list of values by lower, upper and step values
+        :rtype: list
+        """
+        return list(np.arange(lower, upper, step))
+
     @staticmethod
     def format_minutes(minutes):
         """
