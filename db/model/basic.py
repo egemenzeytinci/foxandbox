@@ -20,6 +20,32 @@ class TitleType(Enum):
         key = re.sub(r'(?<!^)(?=[A-Z])', '_', tt).upper()
         return TitleType[key].value
 
+    @staticmethod
+    def get_by_type(type='movie'):
+        mapping = {
+            'movie': [
+                'movie',
+                'tv_movie',
+                'short',
+                'tv_short',
+                'tv_special'
+            ],
+            'series': [
+                'tv_series',
+                'tv_mini_series'
+            ]
+        }
+
+        names = mapping[type]
+
+        values = []
+
+        for name in names:
+            key = name.upper()
+            values.append(TitleType[key].value)
+
+        return values
+
 
 class Basic(Base):
     __tablename__ = 'basics'

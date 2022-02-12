@@ -1,4 +1,5 @@
 from attrdict import AttrDict
+from db.model import TitleType
 from db.service import BasicService
 from elastic import es
 from elastic.model import Basic
@@ -77,6 +78,7 @@ class ElasticBasicService:
         num_votes,
         page=1,
         size=12,
+        type='movie',
         exact=True
     ):
         """
@@ -91,6 +93,11 @@ class ElasticBasicService:
         :rtype: attrdict.AttrDict
         """
         musts = []
+
+        # get title types by general type (movie or series)
+        title_types = TitleType.get_by_type(type)
+
+        musts.append(Q('terms', title_type=title_types))
 
         # if exact match or not
         if exact:
