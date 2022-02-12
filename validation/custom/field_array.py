@@ -12,10 +12,10 @@ class CommaSeparatedField(Field):
         return ''
 
     def process_formdata(self, valuelist):
-        if self.data:
-            valuelist = self.data
-
         if valuelist:
             self.data = [x.strip() for x in valuelist[0].split(',')]
         else:
-            self.data = []
+            try:
+                self.data = self.default()
+            except TypeError:
+                self.data = self.default

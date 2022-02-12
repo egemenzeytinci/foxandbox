@@ -23,10 +23,10 @@ def get_home():
     day = date.today().day
 
     # get 10 movies for the slider
-    slides = bs.get_by_limit_and_offset(offset=day - 1)
+    slides = bs.get_most_popular_items(offset=day - 1)
 
     # get other 10 movies for the scrollable grid
-    grid_movies = bs.get_by_limit_and_offset(offset=day)
+    grid_movies = bs.get_most_popular_items(offset=day)
 
     # get other 8 movies for the card items
     card_movies = bs.get_new_released_movies()

@@ -35,7 +35,7 @@ def search():
         score=form.score.data,
         num_votes=form.num_votes.data,
         page=form.page.data,
-        exact=False
+        exact=form.exact.data
     )
 
     m.status = True
@@ -61,6 +61,6 @@ def get_home():
     r.genres = [g[0] for g in bs.get_genres()]
 
     # get default movies to list
-    r.movies = bs.get_by_limit_and_offset(limit=12)
+    r.movies = bs.get_most_popular_items(limit=12)
 
     return render_template('movie.html', **r)

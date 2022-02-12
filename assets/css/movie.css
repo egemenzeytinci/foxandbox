@@ -26,3 +26,12 @@
     width: 5rem;
     height: 5rem;
 }
+
+.tooltip-inner {
+    max-width: 100% !important;
+}
+
+.form-check-input:checked {
+    background-color: #374785;
+    border-color: #374785;
+}
