@@ -1,7 +1,7 @@
 {% extends 'layout.html' %}
 
 {% block style %}
-    <link rel="stylesheet" type="text/css" href="/assets/css/movie.css"/>
+    <link rel="stylesheet" type="text/css" href="/assets/css/title.css"/>
 {% endblock %}
 
 {% block content %}
@@ -11,7 +11,7 @@
                 <div class="card-body">
                     <div class="row">
                         <h4>Filter at your pleasure</h4>
-                        <p class="fs-6">You can filter movies at your pleasure. Enjoy it!</p>
+                        <p class="fs-6">You can filter series' at your pleasure. Enjoy it!</p>
                         <h5 class="mt-2">Filter by genre</h5>
                         <div class="form-check">
                             {% for g in genres %}
@@ -26,7 +26,7 @@
                             <label class="form-check-label" for="exact-match">
                                 Exact match
                             </label>
-                            <i class="far fa-question-circle" data-bs-toggle="tooltip" data-bs-placement="right" data-bs-animation="false" data-bs-html="true" data-bs-title="If you tick the <i>Exact match</i>, the movies will include all of the genres you select.<br>Otherwise, you will see movies that match at least one of the genres you selected."></i>
+                            <i class="far fa-question-circle" data-bs-toggle="tooltip" data-bs-placement="right" data-bs-animation="false" data-bs-html="true" data-bs-title="If you tick the <i>Exact match</i>, the series' will include all of the genres you select.<br>Otherwise, you will see series' that match at least one of the genres you selected."></i>
                         </div>
                     </div>
                     <div class="row mt-4">
@@ -102,5 +102,5 @@
 {% endblock %}
 
 {% block script %}
-    <script src="/assets/js/movie.js"></script>
+    <script src="/assets/js/title.js"></script>
 {% endblock %}
