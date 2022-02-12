@@ -9,6 +9,11 @@
     const nav = document.querySelector('nav.nav-pagination');
     const ul = document.querySelector('ul.ul-pagination');
 
+    const tte = document.querySelector('[data-bs-toggle="tooltip"]')
+    const tt = new bootstrap.Tooltip(tte);
+
+    const em = document.getElementById('exact-match');
+
     var pl = [];
 
     function fetchData(page = 1) {
@@ -31,11 +36,12 @@
         var formData = new FormData();
 
         // Form data for the request
-        if (genres.length > 0) formData.append('years', years);
+        if (genres.length > 0) formData.append('genres', genres);
         if (years.length > 0) formData.append('years', years);
         if (cs) formData.append('score', cs.value)
         if (cn) formData.append('num_votes', cn.value)
 
+        formData.append('exact', em.checked);
         formData.append('page', page);
 
         xhr.open('POST', '/movie/search', false);

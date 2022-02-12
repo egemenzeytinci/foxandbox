@@ -37,7 +37,7 @@ class ElasticBasicService:
 
         while True:
             # get movies by timestamp with limit and offset
-            results = bs.get_by_limit_and_offset(offset=offset, limit=limit, is_home=False)
+            results = bs.get_by_limit_and_offset(offset=offset, limit=limit)
 
             if len(results) == 0:
                 break

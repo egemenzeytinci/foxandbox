@@ -58,12 +58,13 @@ class BasicService:
         finally:
             session.close()
 
-    def get_by_limit_and_offset(self, offset=0, limit=10, is_home=True):
+    def get_most_popular_items(self, offset=0, limit=10, type='movie'):
         """
-        Get movies by random and day of the month
+        Get items by type (movie or series)
 
         :param int offset: offset
         :param int limit: limit
+        :param str type: movie or series
         :return: list of movies
         :rtype: list[Basic, Rating]
         """
@@ -73,18 +74,61 @@ class BasicService:
 
         session = get_session()
 
+        title_types = [
+            tt.get('movie'),
+            tt.get('tv_movie'),
+            tt.get('short'),
+            tt.get('tv_short'),
+            tt.get('tv_special'),
+        ]
+
+        if type == 'series':
+            title_types = [
+                tt.get('tv_series'),
+                tt.get('tv_mini_series'),
+            ]
+
+        try:
+            rows = session \
+                .query(b, r) \
+                .join(r, b.title_id == r.title_id) \
+                .filter(b.title_type.in_(title_types)) \
+                .order_by((r.num_votes * r.average_rating).desc()) \
+                .offset(offset * limit) \
+                .limit(limit) \
+                .all()
+
+            results = []
+
+            for row in rows:
+                a = AttrDict()
+                a.basic = row[0]
+                a.rating = row[1]
+
+                results.append(a)
+
+            return results
+        finally:
+            session.close()
+
+    def get_by_limit_and_offset(self, offset=0, limit=10):
+        """
+        Get movies by limit and offset
+
+        :param int offset: offset
+        :param int limit: limit
+        :return: list of movies
+        :rtype: list[Basic, Rating]
+        """
+        b = Basic
+        r = Rating
+
+        session = get_session()
+
         filters = [
             b.description.isnot(None),
             b.horizontal_image.isnot(None),
         ]
-
-        if is_home:
-            filters.extend([
-                r.num_votes >= 100000,
-                r.average_rating >= 7.0,
-                b.title_type == tt.get('movie'),
-                b.start_year > 1990,
-            ])
 
         try:
             rows = session \
