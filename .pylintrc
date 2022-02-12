@@ -43,6 +43,7 @@ max-args=10
 generated-members=
     # elasticsearch-dsl
     s.source,
+    s.sort,
     # sqlalchemy
     session.commit,
     session.query,

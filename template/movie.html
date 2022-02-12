@@ -23,50 +23,40 @@
                     <div class="row mt-4">
                         <h5>Filter by year</h5>
                         <div class="form-check">
-                            <input class="btn-check" name="year" type="checkbox" value="2020s" id="2020s"/>
-                            <label class="btn btn-outline-secondary mt-2" for="2020s">
-                                2020s
-                            </label>
+                            {% for i in range(2029, 1939, -10) %}
+                                {% set button_text = (i - 9) | string + 's' %}
 
-                            <input class="btn-check" name="year" type="checkbox" value="2010s" id="2010s"/>
-                            <label class="btn btn-outline-secondary mt-2" for="2010s">
-                                2010s
-                            </label>
+                                {% if i == 1949 %}
+                                    {% set button_text = 'Before 1950' %}
+                                {% endif %}
 
-                            <input class="btn-check" name="year" type="checkbox" value="2000s" id="2000s"/>
-                            <label class="btn btn-outline-secondary mt-2" for="2000s">
-                                2000s
-                            </label>
-
-                            <input class="btn-check" name="year" type="checkbox" value="1990s" id="1990s"/>
-                            <label class="btn btn-outline-secondary mt-2" for="1990s">
-                                1990s
-                            </label>
-
-                            <input class="btn-check" name="year" type="checkbox" value="1980s" id="1980s"/>
-                            <label class="btn btn-outline-secondary mt-2" for="1980s">
-                                1980s
-                            </label>
-
-                            <input class="btn-check" name="year" type="checkbox" value="1970s" id="1970s"/>
-                            <label class="btn btn-outline-secondary mt-2" for="1970s">
-                                1970s
-                            </label>
-
-                            <input class="btn-check" name="year" type="checkbox" value="1960s" id="1960s"/>
-                            <label class="btn btn-outline-secondary mt-2" for="1960s">
-                                1960s
-                            </label>
-
-                            <input class="btn-check" name="year" type="checkbox" value="1950s" id="1950s"/>
-                            <label class="btn btn-outline-secondary mt-2" for="1950s">
-                                1950s
-                            </label>
-
-                            <input class="btn-check" name="year" type="checkbox" value="b1950" id="b1950"/>
-                            <label class="btn btn-outline-secondary mt-2" for="b1950">
-                                Before 1950
-                            </label>
+                                <input class="btn-check" name="year" type="checkbox" value="{{ i }}" id="{{ i }}s"/>
+                                <label class="btn btn-outline-secondary mt-2" for="{{ i }}s">
+                                    {{ button_text }}
+                                </label>
+                            {% endfor %}
+                        </div>
+                    </div>
+                    <div class="row mt-4">
+                        <h5>Filter by IMDB score</h5>
+                        <div class="form-check">
+                            {% for i in f_range(5, 9.5, 0.5) %}
+                                <input class="btn-check" name="score" type="radio" value="{{ i }}" id="{{ i }}+"/>
+                                <label class="btn btn-outline-secondary mt-2" for="{{ i }}+">
+                                    {{ i }}+
+                                </label>
+                            {% endfor %}
+                        </div>
+                    </div>
+                    <div class="row mt-4">
+                        <h5>Filter by number of votes</h5>
+                        <div class="form-check">
+                            {% for i in range(5000, 30000, 5000) %}
+                                <input class="btn-check" name="num_votes" type="radio" value="{{ i }}" id="{{ i }}+"/>
+                                <label class="btn btn-outline-secondary mt-2" for="{{ i }}+">
+                                    {{ i }}+
+                                </label>
+                            {% endfor %}
                         </div>
                     </div>
                     <button type="button" class="btn btn-primary btn-apply">
@@ -96,8 +86,7 @@
             {% endfor %}
         </div>
         <nav class="visually-hidden nav-pagination mb-5">
-            <ul class="pagination ul-pagination">
-            </ul>
+            <ul class="pagination ul-pagination"></ul>
         </nav>
     </div>
 {% endblock %}

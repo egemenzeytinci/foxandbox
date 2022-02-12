@@ -11,18 +11,6 @@ class ElasticBasicService:
     def __init__(self):
         self._name = 'basic'
 
-        self._year_map = {
-            '2020s': [2020, 2029],
-            '2010s': [2010, 2019],
-            '2000s': [2000, 2009],
-            '1990s': [1990, 1999],
-            '1980s': [1980, 1989],
-            '1970s': [1970, 1979],
-            '1960s': [1960, 1969],
-            '1950s': [1950, 1959],
-            'b1950': [1800, 1949]
-        }
-
     def _save(self, basics):
         """
         Save data to basic index
@@ -71,6 +59,7 @@ class ElasticBasicService:
                 b.genres = r.basic.genres
                 b.start_year = r.basic.start_year
                 b.average_rating = r.rating.average_rating
+                b.score = r.rating.average_rating * r.rating.num_votes
                 b.num_votes = r.rating.num_votes
                 b.title_type = r.basic.title_type
 
@@ -80,7 +69,16 @@ class ElasticBasicService:
 
             offset += limit
 
-    def search(self, genres, years, page=1, size=12, exact=True):
+    def search(
+        self,
+        genres,
+        years,
+        score,
+        num_votes,
+        page=1,
+        size=12,
+        exact=True
+    ):
         """
         Search on basic index
 
@@ -103,13 +101,11 @@ class ElasticBasicService:
 
         ranges = []
 
+        # filter by year
         for year in years:
-            lower, upper = self._year_map[year]
-
-            # filter by year
             year_filter = {
-                'gte': lower,
-                'lte': upper
+                'gte': int(year) - 9,
+                'lte': int(year)
             }
 
             range_query = Q('range', start_year=year_filter)
@@ -117,12 +113,24 @@ class ElasticBasicService:
             ranges.append(range_query)
 
         filters = [
-            Q('bool', should=ranges)
+            Q('bool', should=ranges),
         ]
+
+        # filter by imdb score
+        score_filter = Q('range', average_rating={'gte': float(score)})
+        filters.append(score_filter)
+
+        # filter by number of votes
+        vote_filter = Q('range', num_votes={'gte': num_votes})
+        filters.append(vote_filter)
 
         # search object by limit and offset
         from_ = (page - 1) * size
+
         s = Search(using=es, index=self._name).extra(from_=from_, size=size)
+
+        # sort by score (num_votes * average_rating) descending
+        s = s.sort('-score')
 
         # set query
         s.query = Q('bool', must=musts, filter=filters)

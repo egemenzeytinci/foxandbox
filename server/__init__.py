@@ -8,5 +8,6 @@ app = Flask('recommovie', template_folder='template', static_folder='./assets')
 app.config['SECRET_KEY'] = config.app.secret_key
 
 # update jinja environments
+app.jinja_env.globals['f_range'] = Ninja.float_range
 app.jinja_env.globals['f_minute'] = Ninja.format_minutes
 app.jinja_env.globals['unescape'] = Ninja.unescape
