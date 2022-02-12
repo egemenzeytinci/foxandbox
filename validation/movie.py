@@ -1,7 +1,7 @@
 from validation import ServiceForm
 from validation.custom import CommaSeparatedField
 from wtforms import BooleanField, DecimalField, IntegerField, StringField
-from wtforms.validators import DataRequired, InputRequired, Optional, NumberRange
+from wtforms.validators import AnyOf, DataRequired, InputRequired, Optional, NumberRange
 
 
 class MovieListForm(ServiceForm):
@@ -10,7 +10,7 @@ class MovieListForm(ServiceForm):
             'genres',
             validators=[Optional()]
         ),
-        default='Drama'
+        default='Drama, Comedy, Romance'
     )
 
     years = CommaSeparatedField(
@@ -18,7 +18,7 @@ class MovieListForm(ServiceForm):
             'years',
             validators=[Optional()]
         ),
-        default='1979, 1989, 1999, 2009'
+        default='1979, 1989, 1999, 2009, 2019'
     )
 
     score = DecimalField(
@@ -49,6 +49,14 @@ class MovieListForm(ServiceForm):
             InputRequired('The exact match selection is required.'),
         ],
         false_values=('false', 'False', '')
+    )
+
+    type = StringField(
+        'type',
+        validators=[
+            DataRequired('The type is required.'),
+            AnyOf(values=['movie', 'series'])
+        ]
     )
 
     page = IntegerField(

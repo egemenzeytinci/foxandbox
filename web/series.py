@@ -6,10 +6,10 @@ from server import app
 from server.message import Message
 from validation.movie import MovieListForm
 
-movie = Blueprint('movie', app.name)
+series = Blueprint('series', app.name)
 
 
-@movie.post('/search')
+@series.post('/search')
 def search():
     """
     Search on the elasticsearch index
@@ -47,10 +47,10 @@ def search():
     return m.json()
 
 
-@movie.get('/')
+@series.get('/')
 def get_home():
     """
-    Get movie home page
+    Get series home page
 
     :rtype: flask.Response
     """
@@ -62,6 +62,6 @@ def get_home():
     r.genres = [g[0] for g in bs.get_genres()]
 
     # get default movies to list
-    r.movies = bs.get_most_popular_items(limit=12)
+    r.movies = bs.get_most_popular_items(limit=12, type='series')
 
-    return render_template('movie.html', **r)
+    return render_template('series.html', **r)

@@ -14,6 +14,8 @@
 
     const em = document.getElementById('exact-match');
 
+    const ty = document.querySelector('input[name=type]');
+
     var pl = [];
 
     function fetchData(page = 1) {
@@ -42,9 +44,12 @@
         if (cn) formData.append('num_votes', cn.value)
 
         formData.append('exact', em.checked);
+        formData.append('type', ty.value)
         formData.append('page', page);
 
-        xhr.open('POST', '/movie/search', false);
+        const url = ty.value == 'movie' ? '/movie/search' : '/series/search'
+
+        xhr.open('POST', url, false);
 
         xhr.send(formData);
 
