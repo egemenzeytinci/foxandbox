@@ -70,29 +70,22 @@ class BasicService:
         """
         b = Basic
         r = Rating
-        tt = TitleType
 
         session = get_session()
 
-        title_types = [
-            tt.get('movie'),
-            tt.get('tv_movie'),
-            tt.get('short'),
-            tt.get('tv_short'),
-            tt.get('tv_special'),
-        ]
+        title_types = TitleType.get_by_type(type)
 
-        if type == 'series':
-            title_types = [
-                tt.get('tv_series'),
-                tt.get('tv_mini_series'),
-            ]
+        filters = [
+            b.description.isnot(None),
+            b.horizontal_image.isnot(None),
+            b.title_type.in_(title_types),
+        ]
 
         try:
             rows = session \
                 .query(b, r) \
                 .join(r, b.title_id == r.title_id) \
-                .filter(b.title_type.in_(title_types)) \
+                .filter(*filters) \
                 .order_by((r.num_votes * r.average_rating).desc()) \
                 .offset(offset * limit) \
                 .limit(limit) \
