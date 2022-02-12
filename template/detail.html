@@ -2,6 +2,10 @@
 
 {% block style %}
     <link rel="stylesheet" type="text/css" href="/assets/css/detail.css"/>
+    <meta property="og:url" content="https://foxandbox.io/detail/{{ original.basic.title_id }}"/>
+    <meta property="og:image" content="{{ original.basic.image_url }}"/>
+    <meta property="og:genres" content="{{ ', '.join(original.basic.genres) }}"/>
+    <meta property="og:title" content="{{ original.basic.original_title }} ({{ original.basic.start_year }})"/>
 {% endblock %}
 
 {% block content %}
