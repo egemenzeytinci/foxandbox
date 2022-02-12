@@ -291,7 +291,6 @@ class BasicService:
         try:
             return session \
                 .query(column) \
-                .filter(Basic.title_type == TitleType.get('movie')) \
                 .order_by(column) \
                 .all()
         finally:
