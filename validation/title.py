@@ -4,20 +4,16 @@ from wtforms import BooleanField, DecimalField, IntegerField, StringField
 from wtforms.validators import AnyOf, DataRequired, InputRequired, Optional, NumberRange
 
 
-class MovieListForm(ServiceForm):
+class TitleListForm(ServiceForm):
     genres = CommaSeparatedField(
-        StringField(
-            'genres',
-            validators=[Optional()]
-        ),
+        validators=[Optional()],
+        coerce=str,
         default='Drama, Comedy, Romance'
     )
 
     years = CommaSeparatedField(
-        IntegerField(
-            'years',
-            validators=[Optional()]
-        ),
+        validators=[Optional()],
+        coerce=int,
         default='1979, 1989, 1999, 2009, 2019'
     )
 

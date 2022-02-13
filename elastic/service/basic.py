@@ -12,6 +12,9 @@ class ElasticBasicService:
     def __init__(self):
         self._name = 'basic'
 
+        # minimum year of the year categories
+        self._min_year_ = 1949
+
     def _save(self, basics):
         """
         Save data to basic index
@@ -110,8 +113,13 @@ class ElasticBasicService:
 
         # filter by year
         for year in years:
+            lower = year - 9
+
+            if year == self._min_year_:
+                lower = 1800
+
             year_filter = {
-                'gte': int(year) - 9,
+                'gte': lower,
                 'lte': int(year)
             }
 

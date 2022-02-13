@@ -4,7 +4,7 @@ from elastic.service import ElasticBasicService
 from flask import Blueprint, render_template
 from server import app
 from server.message import Message
-from validation.movie import MovieListForm
+from validation.title import TitleListForm
 
 series = Blueprint('series', app.name)
 
@@ -20,7 +20,7 @@ def search():
 
     ebs = ElasticBasicService()
 
-    form = MovieListForm()
+    form = TitleListForm()
 
     # validate form
     if not form.validate():
