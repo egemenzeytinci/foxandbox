@@ -150,5 +150,7 @@
         }
 
         nav.classList.remove('visually-hidden');
+
+        this.blur();
     })
 }()

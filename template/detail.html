@@ -6,6 +6,11 @@
     <meta property="og:image" content="{{ original.basic.image_url }}"/>
     <meta property="og:genres" content="{{ ', '.join(original.basic.genres) }}"/>
     <meta property="og:title" content="{{ original.basic.original_title }} ({{ original.basic.start_year }})"/>
+
+    <meta itemprop="url" content="https://foxandbox.io/detail/{{ original.basic.title_id }}"/>
+    <meta itemprop="image" content="{{ original.basic.image_url }}"/>
+    <meta itemprop="genres" content="{{ ', '.join(original.basic.genres) }}"/>
+    <meta itemprop="title" content="{{ original.basic.original_title }} ({{ original.basic.start_year }})"/>
 {% endblock %}
 
 {% block content %}
