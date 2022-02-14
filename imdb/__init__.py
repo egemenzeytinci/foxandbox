@@ -183,7 +183,7 @@ def save_image(movie_id, url, horizontal=False):
     width, height = img.size
 
     # resize image
-    if width >= MAX_WIDTH and height >= MAX_HEIGHT:
+    if width >= MAX_WIDTH or height >= MAX_HEIGHT:
         width_ratio = width / MAX_WIDTH
         height_ratio = height / MAX_HEIGHT
 
