@@ -74,3 +74,12 @@ h5 {
 footer {
     background-color: #374785;
 }
+
+.nav-link.active {
+    color: #cdb699 !important;
+}
+
+.navbar-nav li>a:hover,
+.navbar-nav li>a:focus {
+    color: #cdb699 !important;
+}
