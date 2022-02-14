@@ -21,7 +21,7 @@ USER_AGENT = 'Mozilla/5.0 (Windows NT 6.0; WOW64; rv:24.0) Gecko/20100101 Firefo
 MAX_WIDTH = 1792
 MAX_HEIGHT = 828
 
-# cloud storage client
+# cloud storage client
 session = Session()
 
 s3 = session.client(
