@@ -75,7 +75,7 @@
             content = `
             <div class="col-12 col-lg-3 col-md-3 mb-3">
                 <div class="card">
-                    <img src="${r.image_url}" class="card-img-top" alt="">
+                    <img src="/static/images/${r.title_id}.webp" class="card-img-top" alt="">
                     <div class="card-body">
                         <p class="card-text">
                             ${r.original_title}
@@ -123,6 +123,8 @@
 
         // Find the page count by total hitted items
         pageCount = Math.ceil(data.total_count / 12);
+
+        pageCount = pageCount > 20 ? 20 : pageCount;
 
         for (let i = 1; i <= pageCount; i++) {
             let cls = '';

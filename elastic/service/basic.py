@@ -58,7 +58,6 @@ class ElasticBasicService:
 
                 # set features
                 b.title_id = r.basic.title_id
-                b.image_url = r.basic.image_url
                 b.original_title = r.basic.original_title
                 b.genres = r.basic.genres
                 b.start_year = r.basic.start_year
@@ -97,47 +96,51 @@ class ElasticBasicService:
         """
         musts = []
 
+        filters = []
+
         # get title types by general type (movie or series)
         title_types = TitleType.get_by_type(type)
 
         musts.append(Q('terms', title_type=title_types))
 
         # if exact match or not
-        if exact:
+        if genres and exact:
             for genre in genres:
                 musts.append(Q('term', genres=genre))
-        else:
+
+        if genres and not exact:
             musts.append(Q('terms', genres=genres))
 
         ranges = []
 
-        # filter by year
-        for year in years:
-            lower = year - 9
+        if years:
+            # filter by year
+            for year in years:
+                lower = year - 9
 
-            if year == self._min_year_:
-                lower = 1800
+                if year == self._min_year_:
+                    lower = 1800
 
-            year_filter = {
-                'gte': lower,
-                'lte': int(year)
-            }
+                year_filter = {
+                    'gte': lower,
+                    'lte': int(year)
+                }
 
-            range_query = Q('range', start_year=year_filter)
+                range_query = Q('range', start_year=year_filter)
 
-            ranges.append(range_query)
+                ranges.append(range_query)
 
-        filters = [
-            Q('bool', should=ranges),
-        ]
+            filters.append(Q('bool', should=ranges))
 
         # filter by imdb score
-        score_filter = Q('range', average_rating={'gte': float(score)})
-        filters.append(score_filter)
+        if score:
+            score_filter = Q('range', average_rating={'gte': float(score)})
+            filters.append(score_filter)
 
         # filter by number of votes
-        vote_filter = Q('range', num_votes={'gte': num_votes})
-        filters.append(vote_filter)
+        if num_votes:
+            vote_filter = Q('range', num_votes={'gte': num_votes})
+            filters.append(vote_filter)
 
         # search object by limit and offset
         from_ = (page - 1) * size

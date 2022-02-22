@@ -60,11 +60,10 @@ class Basic(Base):
     runtime = Column('runtime', Integer)
     genres = Column('genres', Array(String(20)))
     description = Column('description', Text)
-    image_url = Column('image_url', Text)
-    horizontal_image = Column('horizontal_image', Text)
     published_date = Column('published_date', Date)
     cluster = Column('cluster', Integer)
-    is_crawled = Column('is_crawled', Boolean, default=False, index=True)
+    has_image = Column('has_image', Boolean, default=False, nullable=False, index=True)
+    is_crawled = Column('is_crawled', Boolean, default=False, nullable=False, index=True)
 
     @staticmethod
     def mapping():

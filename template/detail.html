@@ -3,7 +3,7 @@
 {% block style %}
     <link rel="stylesheet" type="text/css" href="/assets/css/detail.css"/>
     <meta property="og:url" content="https://foxandbox.io/detail/{{ original.basic.title_id }}"/>
-    <meta property="og:image" content="{{ original.basic.image_url }}"/>
+    <meta property="og:image" content="/static/images/{{ original.basic.title_id }}.webp"/>
     <meta property="og:genres" content="{{ ', '.join(original.basic.genres) }}"/>
     <meta property="og:title" content="{{ original.basic.original_title }} ({{ original.basic.start_year }})"/>
 
@@ -47,10 +47,10 @@
         </div>
         <div class="row">
             <div class="col-12 col-lg-3 mt-2">
-                <img class="card-img-top" src="{{ original.basic.image_url }}">
+                <img class="card-img-top" src="/static/images/{{ original.basic.title_id }}.webp">
             </div>
             <div class="col-12 col-lg-6 mt-2 d-none d-lg-block">
-                <img class="card-img-top" src="{{ original.basic.horizontal_image }}">
+                <img class="card-img-top" src="/static/images/{{ original.basic.title_id }}_horizontal.webp">
             </div>
             <div class="col-12 col-lg-3 text-center mt-2">
                 <div class="card card-information p-3">
@@ -102,7 +102,7 @@
             {% for r in recommendations %}
                 <div class="col-12 col-lg-3 col-md-3 mb-3">
                     <div class="card">
-                        <img src="{{ r.basic.image_url }}" class="card-img-top" alt="">
+                        <img src="/static/images/{{ r.basic.title_id }}.webp" class="card-img-top" alt="">
                         <div class="card-body">
                             <p class="card-text">
                                 {{ r.basic.original_title }}

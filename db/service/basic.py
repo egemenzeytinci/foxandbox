@@ -77,7 +77,7 @@ class BasicService:
 
         filters = [
             b.description.isnot(None),
-            b.horizontal_image.isnot(None),
+            b.has_image.is_(True),
             b.title_type.in_(title_types),
         ]
 
@@ -120,7 +120,7 @@ class BasicService:
 
         filters = [
             b.description.isnot(None),
-            b.horizontal_image.isnot(None),
+            b.has_image.is_(True),
         ]
 
         try:
@@ -129,7 +129,7 @@ class BasicService:
                 .join(r, b.title_id == r.title_id) \
                 .filter(*filters) \
                 .order_by(b.title_id) \
-                .offset(offset * limit) \
+                .offset(offset) \
                 .limit(limit) \
                 .all()
 
@@ -162,7 +162,7 @@ class BasicService:
             r.num_votes >= 10000,
             r.average_rating >= 6.0,
             b.description.isnot(None),
-            b.horizontal_image.isnot(None),
+            b.has_image.is_(True),
             b.published_date.isnot(None),
         ]
 
@@ -199,7 +199,7 @@ class BasicService:
             r.num_votes >= 20000,
             r.average_rating >= 6.0,
             b.description.isnot(None),
-            b.horizontal_image.isnot(None),
+            b.has_image.is_(True),
             b.title_type == tt.get('movie'),
             b.published_date.isnot(None),
         ]
