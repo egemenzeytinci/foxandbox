@@ -20,7 +20,7 @@
                                 </p>
                                 <div class="row mt-5">
                                     <div class="col-12 col-md-6 col-xl-6">
-                                        <img class="fade-image" src="{{ slide.basic.horizontal_image }}" alt="{{ slide.basic.original_title }}">
+                                        <img class="fade-image" src="/static/images/{{ slide.basic.title_id }}.webp" alt="{{ slide.basic.original_title }}">
                                     </div>
                                     <div class="col-12 col-md-6 col-xl-6">
                                         <a href="/detail/{{ slide.basic.title_id }}" class="stretched-link" target="_blank"></a>
@@ -68,7 +68,7 @@
                 <div class="d-flex flex-row flex-nowrap overflow-auto">
                     {% for movie in grid_movies %}
                         <div class="card card-scroll">
-                            <img src="{{ movie.basic.horizontal_image }}" class="card-img-top h-100" alt="{{ movie.basic.original_title }}">
+                            <img src="/static/images/{{ movie.basic.title_id }}_horizontal.webp" class="card-img-top h-100" alt="{{ movie.basic.original_title }}">
                             <a href="/detail/{{ movie.basic.title_id }}" class="stretched-link" target="_blank"></a>
                         </div>
                     {% endfor %}
@@ -80,7 +80,7 @@
             {% for card in card_movies %}
                 <div class="col-12 col-lg-3 col-md-3 mb-3">
                     <div class="card">
-                        <img src="{{ card.basic.image_url }}" class="card-img-top" alt="">
+                        <img src="/static/images/{{ card.basic.title_id }}.webp" class="card-img-top" alt="">
                         <div class="card-body">
                             <p class="card-text">
                                 {{ card.basic.original_title }}

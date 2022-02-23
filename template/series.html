@@ -84,7 +84,7 @@
             {% for movie in movies %}
                 <div class="col-12 col-lg-3 col-md-3 mb-3 movie">
                     <div class="card">
-                        <img src="{{ movie.basic.image_url }}" class="card-img-top" alt="">
+                        <img src="/static/images/{{ movie.basic.title_id }}.webp" class="card-img-top" alt="">
                         <div class="card-body">
                             <p class="card-text">
                                 {{ movie.basic.original_title }}

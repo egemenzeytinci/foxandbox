@@ -7,14 +7,12 @@ from wtforms.validators import AnyOf, DataRequired, InputRequired, Optional, Num
 class TitleListForm(ServiceForm):
     genres = CommaSeparatedField(
         validators=[Optional()],
-        coerce=str,
-        default='Drama, Comedy, Romance'
+        coerce=str
     )
 
     years = CommaSeparatedField(
         validators=[Optional()],
-        coerce=int,
-        default='1979, 1989, 1999, 2009, 2019'
+        coerce=int
     )
 
     score = DecimalField(
@@ -22,8 +20,7 @@ class TitleListForm(ServiceForm):
         validators=[
             Optional(),
             NumberRange(min=5.0, max=9.0, message='The score must be between 5.0 and 9.0.')
-        ],
-        default=8.0
+        ]
     )
 
     num_votes = IntegerField(
@@ -35,8 +32,7 @@ class TitleListForm(ServiceForm):
                 max=25000,
                 message='The number of votes must be between 5000 and 25000.'
             )
-        ],
-        default=25000
+        ]
     )
 
     exact = BooleanField(

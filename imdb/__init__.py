@@ -152,64 +152,61 @@ def save_image(movie_id, url, horizontal=False):
     :return: upload status
     :rtype: bool
     """
-    if not url:
+    try:
+        temp_path = f'{config.system.temporary}/images'
+
+        name = f'{movie_id}_horizontal' if horizontal else f'{movie_id}'
+
+        jpg_path = f'{temp_path}/{name}.jpg'
+        webp_path = f'{temp_path}/{name}.webp'
+
+        # get image content by using image url
+        headers = {
+            'Accept-Encoding': 'identity',
+            'Connection': 'Keep-Alive',
+        }
+
+        bs = requests.get(url, stream=True, headers=headers)
+
+        with open(jpg_path, 'wb') as f:
+            # write image content to local file
+            for b in bs:
+                f.write(b)
+
+        img = Image.open(jpg_path).convert('RGB')
+        width, height = img.size
+
+        # resize image
+        if width >= MAX_WIDTH or height >= MAX_HEIGHT:
+            width_ratio = width / MAX_WIDTH
+            height_ratio = height / MAX_HEIGHT
+
+            # get the best ratio
+            min_ratio = min(width_ratio, height_ratio)
+
+            nw = int(width / min_ratio)
+            nh = int(height / min_ratio)
+
+            # resize image for best ratio
+            img = img.resize((nw, nh))
+
+        # save image as webp file
+        img.save(webp_path, 'WEBP')
+
+        bucket = config.storage.bucket
+        object_name = f'{config.storage.folder}/{name}.webp'
+
+        # upload to object storage
+        s3.upload_file(webp_path, bucket, object_name)
+
+        # remove files from local path
+        os.remove(jpg_path)
+        os.remove(webp_path)
+
+        return True
+    except BaseException as e:
+        logger.error(e)
         return False
-
-    temp_path = f'{config.system.temporary}/images'
-
-    # create temporary path if not exists
-    if not os.path.exists(temp_path):
-        os.makedirs(temp_path)
-
-    name = f'{movie_id}_horizontal' if horizontal else f'{movie_id}'
-
-    jpg_path = f'{temp_path}/{name}.jpg'
-    webp_path = f'{temp_path}/{name}.webp'
-
-    # get image content by using image url
-    headers = {
-        'Accept-Encoding': 'identity',
-        'Connection': 'Keep-Alive',
-    }
-
-    bs = requests.get(url, stream=True, headers=headers)
-
-    with open(jpg_path, 'wb') as f:
-        # write image content to local file
-        for b in bs:
-            f.write(b)
-
-    img = Image.open(jpg_path).convert('RGB')
-    width, height = img.size
-
-    # resize image
-    if width >= MAX_WIDTH or height >= MAX_HEIGHT:
-        width_ratio = width / MAX_WIDTH
-        height_ratio = height / MAX_HEIGHT
-
-        # get the best ratio
-        min_ratio = min(width_ratio, height_ratio)
-
-        nw = int(width / min_ratio)
-        nh = int(height / min_ratio)
-
-        # resize image for best ratio
-        img = img.resize((nw, nh))
-
-    # save image as webp file
-    img.save(webp_path, 'WEBP')
-
-    bucket = config.storage.bucket
-    object_name = f'{config.storage.folder}/{name}.webp'
-
-    # upload to object storage
-    s3.upload_file(webp_path, bucket, object_name)
-
-    # remove files from local path
-    os.remove(jpg_path)
-    os.remove(webp_path)
-
-    return True
 
 
 def append(movie_id):
@@ -230,7 +227,7 @@ def append(movie_id):
 
         # save poster image to cloud
         poster_img = get_poster(info)
-        _ = save_image(movie_id, poster_img)
+        movie.has_image = save_image(movie_id, poster_img)
 
         # extract movie information from the json
         movie.description = get_description(info)
@@ -255,6 +252,12 @@ def crawl(ids):
 
     :param list ids: title ids
     """
+    temp_path = f'{config.system.temporary}/images'
+
+    # create temporary path if not exists for images
+    if not os.path.exists(temp_path):
+        os.makedirs(temp_path)
+
     # create pool
     pool = mp.Pool(config.system.workers)
 
@@ -274,6 +277,7 @@ def crawl(ids):
         instance.description = record.get('description')
         instance.horizontal_image = record.get('horizontal_image')
         instance.published_date = record.get('published_date')
+        instance.has_image = record.get('has_image')
         instance.is_crawled = True
 
         instances.append(instance)
