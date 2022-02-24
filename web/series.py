@@ -1,4 +1,5 @@
 from attrdict import AttrDict
+from db.model import ImageStatus
 from db.service import BasicService
 from elastic.service import ElasticBasicService
 from flask import Blueprint, render_template
@@ -62,6 +63,10 @@ def get_home():
     r.genres = [g[0] for g in bs.get_genres()]
 
     # get default movies to list
-    r.movies = bs.get_most_popular_items(limit=12, type='series')
+    r.movies = bs.get_most_popular_items(
+        limit=12,
+        type='series',
+        img_status=ImageStatus.VERTICAL_IMAGE
+    )
 
     return render_template('series.html', **r)

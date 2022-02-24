@@ -8,7 +8,7 @@ from attrdict import AttrDict
 from boto3.session import Session
 from bs4 import BeautifulSoup
 from datetime import date
-from db.model import Basic
+from db.model import Basic, ImageStatus
 from PIL import Image
 from util.config import config
 from util.log import logger
@@ -234,7 +234,7 @@ def append(movie_id):
 
         # save poster image to cloud
         poster_img = get_poster(info)
-        movie.has_image = save_image(movie_id, poster_img)
+        vertical = save_image(movie_id, poster_img)
 
         # extract movie information from the json
         movie.description = get_description(info)
@@ -245,7 +245,18 @@ def append(movie_id):
 
         # save horizontal image to cloud
         horizontal_img = get_horizontal_image(info)
-        _ = save_image(movie_id, horizontal_img, horizontal=True)
+        horizontal = save_image(movie_id, horizontal_img, horizontal=True)
+
+        # set default image status
+        movie.image_status = ImageStatus.NO_IMAGE
+
+        # has vertical image or both
+        if vertical:
+            movie.image_status = ImageStatus.VERTICAL_IMAGE
+
+        if vertical and horizontal:
+            movie.image_status = ImageStatus.HORIZONTAL_IMAGE
+
     except BaseException as e:
         logger.error(f'{e} for title_id={movie_id}')
         time.sleep(10)

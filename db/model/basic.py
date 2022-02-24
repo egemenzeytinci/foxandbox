@@ -47,6 +47,12 @@ class TitleType(Enum):
         return values
 
 
+class ImageStatus:
+    VERTICAL_IMAGE = 1
+    HORIZONTAL_IMAGE = 2
+    NO_IMAGE = 3
+
+
 class Basic(Base):
     __tablename__ = 'basics'
 
@@ -62,7 +68,7 @@ class Basic(Base):
     description = Column('description', Text)
     published_date = Column('published_date', Date)
     cluster = Column('cluster', Integer)
-    has_image = Column('has_image', Boolean, default=False, nullable=False, index=True)
+    image_status = Column('image_status', nullable=False, index=True)
     is_crawled = Column('is_crawled', Boolean, default=False, nullable=False, index=True)
 
     @staticmethod
