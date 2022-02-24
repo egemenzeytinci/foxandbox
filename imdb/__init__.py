@@ -295,7 +295,7 @@ def crawl(ids):
         instance.description = record.get('description')
         instance.horizontal_image = record.get('horizontal_image')
         instance.published_date = record.get('published_date')
-        instance.has_image = record.get('has_image')
+        instance.image_status = record.get('image_status')
         instance.is_crawled = True
 
         instances.append(instance)
