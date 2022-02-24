@@ -16,6 +16,7 @@ from util.log import logger
 # request headers
 BASE_PATH = ' http://www.imdb.com/title'
 USER_AGENT = 'Mozilla/5.0 (Windows NT 6.0; WOW64; rv:24.0) Gecko/20100101 Firefox/24.0'
+ACCEPT_LANGUAGE = 'en-US,en;q=0.5'
 
 # image maximum size
 MAX_WIDTH = 1792
@@ -40,7 +41,10 @@ def get_page(path):
     :return: http response
     :rtype: str
     """
-    headers = {'User-Agent': USER_AGENT}
+    headers = {
+        'User-Agent': USER_AGENT,
+        'Accept-Language': ACCEPT_LANGUAGE
+    }
     resp = requests.get(path, headers=headers)
 
     return resp.text if resp.status_code == 200 else None
