@@ -156,6 +156,9 @@ def save_image(movie_id, url, horizontal=False):
     :return: upload status
     :rtype: bool
     """
+    if not url:
+        return False
+
     try:
         temp_path = f'{config.system.temporary}/images'
 
