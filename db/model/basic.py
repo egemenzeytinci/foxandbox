@@ -68,7 +68,7 @@ class Basic(Base):
     description = Column('description', Text)
     published_date = Column('published_date', Date)
     cluster = Column('cluster', Integer)
-    image_status = Column('image_status', nullable=False, index=True)
+    image_status = Column('image_status', SmallInteger, nullable=False, index=True)
     is_crawled = Column('is_crawled', Boolean, default=False, nullable=False, index=True)
 
     @staticmethod
