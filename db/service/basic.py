@@ -1,6 +1,6 @@
 from attrdict import AttrDict
 from db import get_session
-from db.model import Basic, Rating, TitleType
+from db.model import Basic, ImageStatus, Rating, TitleType
 from sqlalchemy import cast, func, String
 from sqlalchemy.dialects.postgresql import array, ARRAY
 
@@ -58,7 +58,13 @@ class BasicService:
         finally:
             session.close()
 
-    def get_most_popular_items(self, offset=0, limit=10, type='movie'):
+    def get_most_popular_items(
+        self,
+        offset=0,
+        limit=10,
+        type='movie',
+        img_status=ImageStatus.HORIZONTAL_IMAGE
+    ):
         """
         Get items by type (movie or series)
 
@@ -77,7 +83,7 @@ class BasicService:
 
         filters = [
             b.description.isnot(None),
-            b.has_image.is_(True),
+            b.image_status == img_status,
             b.title_type.in_(title_types),
         ]
 
@@ -120,7 +126,7 @@ class BasicService:
 
         filters = [
             b.description.isnot(None),
-            b.has_image.is_(True),
+            b.image_status == ImageStatus.VERTICAL_IMAGE,
         ]
 
         try:
@@ -146,7 +152,7 @@ class BasicService:
         finally:
             session.close()
 
-    def get_by_random(self):
+    def get_by_random(self, image_status=ImageStatus.HORIZONTAL_IMAGE):
         """
         Get movie by random
 
@@ -162,7 +168,7 @@ class BasicService:
             r.num_votes >= 10000,
             r.average_rating >= 6.0,
             b.description.isnot(None),
-            b.has_image.is_(True),
+            b.image_status == image_status,
             b.published_date.isnot(None),
         ]
 
@@ -199,7 +205,7 @@ class BasicService:
             r.num_votes >= 20000,
             r.average_rating >= 6.0,
             b.description.isnot(None),
-            b.has_image.is_(True),
+            b.image_status == ImageStatus.VERTICAL_IMAGE,
             b.title_type == tt.get('movie'),
             b.published_date.isnot(None),
         ]

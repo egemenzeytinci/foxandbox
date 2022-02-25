@@ -8,7 +8,7 @@ from attrdict import AttrDict
 from boto3.session import Session
 from bs4 import BeautifulSoup
 from datetime import date
-from db.model import Basic
+from db.model import Basic, ImageStatus
 from PIL import Image
 from util.config import config
 from util.log import logger
@@ -16,6 +16,7 @@ from util.log import logger
 # request headers
 BASE_PATH = ' http://www.imdb.com/title'
 USER_AGENT = 'Mozilla/5.0 (Windows NT 6.0; WOW64; rv:24.0) Gecko/20100101 Firefox/24.0'
+ACCEPT_LANGUAGE = 'en-US,en;q=0.5'
 
 # image maximum size
 MAX_WIDTH = 1792
@@ -40,7 +41,10 @@ def get_page(path):
     :return: http response
     :rtype: str
     """
-    headers = {'User-Agent': USER_AGENT}
+    headers = {
+        'User-Agent': USER_AGENT,
+        'Accept-Language': ACCEPT_LANGUAGE
+    }
     resp = requests.get(path, headers=headers)
 
     return resp.text if resp.status_code == 200 else None
@@ -152,6 +156,9 @@ def save_image(movie_id, url, horizontal=False):
     :return: upload status
     :rtype: bool
     """
+    if not url:
+        return False
+
     try:
         temp_path = f'{config.system.temporary}/images'
 
@@ -227,7 +234,7 @@ def append(movie_id):
 
         # save poster image to cloud
         poster_img = get_poster(info)
-        movie.has_image = save_image(movie_id, poster_img)
+        vertical = save_image(movie_id, poster_img)
 
         # extract movie information from the json
         movie.description = get_description(info)
@@ -238,7 +245,18 @@ def append(movie_id):
 
         # save horizontal image to cloud
         horizontal_img = get_horizontal_image(info)
-        _ = save_image(movie_id, horizontal_img, horizontal=True)
+        horizontal = save_image(movie_id, horizontal_img, horizontal=True)
+
+        # set default image status
+        movie.image_status = ImageStatus.NO_IMAGE
+
+        # has vertical image or both
+        if vertical:
+            movie.image_status = ImageStatus.VERTICAL_IMAGE
+
+        if vertical and horizontal:
+            movie.image_status = ImageStatus.HORIZONTAL_IMAGE
+
     except BaseException as e:
         logger.error(f'{e} for title_id={movie_id}')
         time.sleep(10)
@@ -277,7 +295,7 @@ def crawl(ids):
         instance.description = record.get('description')
         instance.horizontal_image = record.get('horizontal_image')
         instance.published_date = record.get('published_date')
-        instance.has_image = record.get('has_image')
+        instance.image_status = record.get('image_status')
         instance.is_crawled = True
 
         instances.append(instance)
