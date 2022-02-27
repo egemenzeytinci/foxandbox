@@ -212,7 +212,7 @@ def save_image(movie_id, url, horizontal=False):
 
         return True
     except BaseException as e:
-        logger.error(e)
+        logger.error(f'{e} for title_id={movie_id}')
         return False
 
 
@@ -288,6 +288,9 @@ def crawl(ids):
         if not record.get('title_id'):
             continue
 
+        # get image status
+        ims = record.get('image_status')
+
         # create instance
         instance = Basic()
         instance.title_id = record.get('title_id')
@@ -295,7 +298,7 @@ def crawl(ids):
         instance.description = record.get('description')
         instance.horizontal_image = record.get('horizontal_image')
         instance.published_date = record.get('published_date')
-        instance.image_status = record.get('image_status')
+        instance.image_status = ims if ims else ImageStatus.NO_IMAGE
         instance.is_crawled = True
 
         instances.append(instance)

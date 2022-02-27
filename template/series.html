@@ -52,7 +52,11 @@
                             {% for i in f_range(5, 9.5, 0.5) %}
                                 <input class="btn-check" name="score" type="radio" value="{{ i }}" id="{{ i }}+"/>
                                 <label class="btn btn-outline-secondary mt-2" for="{{ i }}+">
-                                    {{ i }}+
+                                    {% set number = i %}
+                                    {% if (i | int) == i %}
+                                        {% set number = i | int %}
+                                    {% endif %}
+                                    {{ number }}+
                                 </label>
                             {% endfor %}
                         </div>
@@ -63,7 +67,7 @@
                             {% for i in range(5000, 30000, 5000) %}
                                 <input class="btn-check" name="num_votes" type="radio" value="{{ i }}" id="{{ i }}+"/>
                                 <label class="btn btn-outline-secondary mt-2" for="{{ i }}+">
-                                    {{ i }}+
+                                    {{ '{0:,}'.format(i) }}+
                                 </label>
                             {% endfor %}
                         </div>
