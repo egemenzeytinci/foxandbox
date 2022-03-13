@@ -118,19 +118,25 @@ def get_horizontal_image(info):
     if 'image' not in info.keys():
         return None
 
+    images = []
+
     # returns dictionary if only one picture, otherwise list
     if isinstance(info.image, dict):
-        first_img = info.image
+        images = [info.image]
     elif isinstance(info.image, tuple):
-        first_img = info.image[0]
+        images = info.image
 
-    # get image width and height
-    width, height = int(first_img.width), int(first_img.height)
+    image_url = None
 
-    if not 1.33 < width / height < 1.66:
-        return None
+    for im in images:
+        # get image width and height
+        width, height = int(im.width), int(im.height)
 
-    return first_img.url
+        if 1.33 < width / height < 1.66:
+            image_url = im.url
+            break
+
+    return image_url
 
 
 def get_published_date(info):
