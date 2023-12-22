@@ -6,6 +6,7 @@ elasticsearch==7.17.0
 elasticsearch_dsl==7.4.0
 flask==2.0.2
 flask-wtf==0.14.3
+ini-klass==0.0.5
 pillow==9.0.1
 psycopg2-binary==2.8.6
 requests==2.27.1

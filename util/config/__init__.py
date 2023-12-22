@@ -1,10 +1,10 @@
 import os
 import sys
-from util.config.config import ConfigParser
+from ini import IniConfig
 
-path = os.environ['CONFIG'] if 'CONFIG' in os.environ else sys.argv[-1:][0]
+path = sys.argv[-1:][0] if sys.argv[-1:][0].endswith('.ini') else os.environ['CONFIG']
 
 if not os.path.exists(path):
     path = './default.ini'
 
-config = ConfigParser.load(path)
+config = IniConfig.read(path)
