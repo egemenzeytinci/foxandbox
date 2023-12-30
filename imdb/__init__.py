@@ -62,7 +62,7 @@ def parse(content):
     attrs = {'type': 'application/ld+json'}
     full_info = content.find('script', attrs=attrs).string
 
-    return AttrDict(json.loads(full_info))
+    return Dict(json.loads(full_info))
 
 
 def get_information(path):

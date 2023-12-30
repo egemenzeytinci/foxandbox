@@ -1,4 +1,4 @@
-from db import engine, insp
+from db import engine
 from db.model import Basic, Episode, Rating
 from termcolor import colored
 from util.config import config
@@ -11,12 +11,18 @@ if __name__ == '__main__':
         Rating,
     ]
 
+    connection = engine.connect()
+
     for table in tables:
         table_name = table.__tablename__
 
         tc = colored(table_name, 'green', attrs=['bold'])
 
-        if insp.has_table(table_name, schema=config.db.schema):
+        if engine.dialect.has_table(
+            connection,
+            table_name=table_name,
+            schema=config.db.schema
+        ):
             logger.info(tc + ' table is already exist')
             continue
 
@@ -28,3 +34,5 @@ if __name__ == '__main__':
             m = tc + ' table could not created. Please check bellow.'
             logger.error(m)
             logger.exception(e)
+
+    connection.close()
