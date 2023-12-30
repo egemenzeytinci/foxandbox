@@ -1,4 +1,4 @@
-from attrdict import AttrDict
+from addict import Dict
 from db.model import ImageStatus
 from db.service import BasicService
 from elastic.service import ElasticBasicService
@@ -55,7 +55,7 @@ def get_home():
 
     :rtype: flask.Response
     """
-    r = AttrDict()
+    r = Dict()
 
     bs = BasicService()
 

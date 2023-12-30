@@ -1,4 +1,4 @@
-from attrdict import AttrDict
+from addict import Dict
 from db import get_session
 from db.model import Basic, ImageStatus, Rating, TitleType
 from sqlalchemy import cast, func, String
@@ -29,7 +29,7 @@ class BasicService:
             if not row:
                 return None
 
-            result = AttrDict()
+            result = Dict()
 
             result.basic = row[0]
             result.rating = row[1]
@@ -100,7 +100,7 @@ class BasicService:
             results = []
 
             for row in rows:
-                a = AttrDict()
+                a = Dict()
                 a.basic = row[0]
                 a.rating = row[1]
 
@@ -142,7 +142,7 @@ class BasicService:
             results = []
 
             for row in rows:
-                a = AttrDict()
+                a = Dict()
                 a.basic = row[0]
                 a.rating = row[1]
 
@@ -180,7 +180,7 @@ class BasicService:
                 .order_by(func.random()) \
                 .first()
 
-            a = AttrDict()
+            a = Dict()
             a.basic = row[0]
             a.rating = row[1]
 
@@ -222,7 +222,7 @@ class BasicService:
             results = []
 
             for row in rows:
-                a = AttrDict()
+                a = Dict()
                 a.basic = row[0]
                 a.rating = row[1]
 
@@ -273,7 +273,7 @@ class BasicService:
             results = []
 
             for row in rows:
-                a = AttrDict()
+                a = Dict()
                 a.basic = row[0]
                 a.rating = row[1]
 
