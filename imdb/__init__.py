@@ -4,7 +4,7 @@ import os
 import requests
 import time
 import tqdm
-from attrdict import AttrDict
+from addict import Dict
 from boto3.session import Session
 from bs4 import BeautifulSoup
 from datetime import date
@@ -230,7 +230,7 @@ def append(movie_id):
     :return: image, description, horizontal image and published date
     :rtype: tuple
     """
-    movie = AttrDict()
+    movie = Dict()
 
     try:
         movie.title_id = movie_id

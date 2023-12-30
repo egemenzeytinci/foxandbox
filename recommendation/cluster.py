@@ -1,4 +1,4 @@
-from attrdict import AttrDict
+from addict import Dict
 from db.model import Basic
 from db.service import BasicService, ScoreService
 from scipy.signal import argrelextrema
@@ -42,7 +42,7 @@ class Cluster:
             # title ids
             title_ids.append(record.title_id)
 
-        result = AttrDict()
+        result = Dict()
         result.title_ids = title_ids
         result.scores = scores
 

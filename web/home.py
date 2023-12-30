@@ -1,4 +1,4 @@
-from attrdict import AttrDict
+from addict import Dict
 from datetime import date
 from db.service import BasicService
 from flask import Blueprint, render_template
@@ -31,7 +31,7 @@ def get_home():
     # get other 8 movies for the card items
     card_movies = bs.get_new_released_movies()
 
-    r = AttrDict()
+    r = Dict()
 
     # set page parameters
     r.slides = slides
@@ -78,7 +78,7 @@ def get_detail(title_id):
         genre=original.basic.genres
     )
 
-    r = AttrDict()
+    r = Dict()
 
     # set page parameters
     r.original = original
@@ -112,7 +112,7 @@ def get_random():
         genre=base.basic.genres
     )
 
-    r = AttrDict()
+    r = Dict()
 
     # set page parameters
     r.original = base

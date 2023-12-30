@@ -1,4 +1,4 @@
-from attrdict import AttrDict
+from addict import Dict
 from db import Base
 from enum import Enum
 from sqlalchemy import Boolean, Column, Date, Integer, SmallInteger, String, Text
@@ -79,7 +79,7 @@ class Basic(Base):
 
     @staticmethod
     def mapping():
-        mapping = AttrDict()
+        mapping = Dict()
         mapping.tconst = 'title_id'
         mapping.titleType = 'title_type'
         mapping.primaryTitle = 'primary_title'

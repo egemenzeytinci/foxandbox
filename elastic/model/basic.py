@@ -1,4 +1,4 @@
-from attrdict import AttrDict
+from addict import Dict
 from elasticsearch_dsl import Document, Float, Integer, Keyword
 
 
@@ -16,6 +16,6 @@ class Basic(Document):
     class Index:
         name = 'basic'
 
-        settings = AttrDict()
+        settings = Dict()
         settings.number_of_shards = 3
         settings.number_of_replicas = 1

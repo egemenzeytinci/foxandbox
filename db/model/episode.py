@@ -1,4 +1,4 @@
-from attrdict import AttrDict
+from addict import Dict
 from db import Base
 from sqlalchemy import cast, Column, ForeignKey, Integer, String
 from sqlalchemy.orm import column_property
@@ -15,7 +15,7 @@ class Episode(Base):
 
     @staticmethod
     def mapping():
-        mapping = AttrDict()
+        mapping = Dict()
         mapping.tconst = 'title_id'
         mapping.parentTconst = 'parent_id'
         mapping.seasonNumber = 'season_number'

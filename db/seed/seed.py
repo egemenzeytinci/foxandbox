@@ -1,4 +1,4 @@
-from attrdict import AttrDict
+from addict import Dict
 from csv import DictReader
 from db import engine
 from db.model import Basic, Episode, Rating, TitleType
@@ -77,7 +77,7 @@ class Seed:
         columns = table.mapping()
 
         for row in reader:
-            record = AttrDict()
+            record = Dict()
 
             # populate table record by using table definition
             for original, column in columns.items():

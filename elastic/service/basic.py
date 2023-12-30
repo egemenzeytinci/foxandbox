@@ -1,4 +1,4 @@
-from attrdict import AttrDict
+from addict import Dict
 from db.model import TitleType
 from db.service import BasicService
 from elastic import es
@@ -50,7 +50,7 @@ class ElasticBasicService:
 
             for r in results:
                 # unique title id
-                meta = AttrDict()
+                meta = Dict()
                 meta.id = r.basic.title_id
 
                 # create basic instance
@@ -162,7 +162,7 @@ class ElasticBasicService:
         if response.timed_out:
             return None
 
-        r = AttrDict()
+        r = Dict()
 
         r.hits = [h.to_dict() for h in response.hits]
         r.total_count = response.hits.total.value
