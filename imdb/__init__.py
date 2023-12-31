@@ -207,10 +207,9 @@ def save_image(movie_id, url, horizontal=False):
         img.save(webp_path, 'WEBP')
 
         bucket = config.storage.bucket
-        object_name = f'{config.storage.folder}/{name}.webp'
 
         # upload to object storage
-        s3.upload_file(webp_path, bucket, object_name)
+        s3.upload_file(webp_path, bucket, f'{name}.webp')
 
         # remove files from local path
         os.remove(jpg_path)
