@@ -23,11 +23,10 @@ s3 = session.client(
 @static.get('/images/<path:path>')
 def send_images(path):
     bucket = config.storage.bucket
-    object_name = f'{config.storage.folder}/{path}'
 
     # get object from object storage
     try:
-        o = s3.get_object(Bucket=bucket, Key=object_name)
+        o = s3.get_object(Bucket=bucket, Key=path)
 
         ae = request.headers.get('Accept-Encoding', '')
         if 'gzip' in ae.lower():
