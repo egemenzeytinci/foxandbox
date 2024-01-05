@@ -118,7 +118,7 @@ def get_horizontal_image(info):
     if 'image' not in info.keys():
         return None
 
-    images = info.images
+    images = info.image
 
     # returns dictionary if only one picture, otherwise list
     if isinstance(info.image, dict):
