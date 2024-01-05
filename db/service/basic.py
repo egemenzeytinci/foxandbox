@@ -63,7 +63,7 @@ class BasicService:
         offset=0,
         limit=10,
         type='movie',
-        img_status=ImageStatus.HORIZONTAL_IMAGE
+        img_status=ImageStatus.BOTH
     ):
         """
         Get items by type (movie or series)

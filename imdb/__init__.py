@@ -118,7 +118,7 @@ def get_horizontal_image(info):
     if 'image' not in info.keys():
         return None
 
-    images = []
+    images = info.images
 
     # returns dictionary if only one picture, otherwise list
     if isinstance(info.image, dict):
@@ -259,8 +259,11 @@ def append(movie_id):
         if vertical:
             movie.image_status = ImageStatus.VERTICAL_IMAGE
 
-        if vertical and horizontal:
+        if horizontal:
             movie.image_status = ImageStatus.HORIZONTAL_IMAGE
+
+        if vertical and horizontal:
+            movie.image_status = ImageStatus.BOTH
 
     except BaseException as e:
         logger.error(f'{e} for title_id={movie_id}')

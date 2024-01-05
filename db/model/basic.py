@@ -48,9 +48,10 @@ class TitleType(Enum):
 
 
 class ImageStatus:
+    NO_IMAGE = 0
     VERTICAL_IMAGE = 1
     HORIZONTAL_IMAGE = 2
-    NO_IMAGE = 3
+    BOTH = 3
 
 
 class Basic(Base):
@@ -75,7 +76,13 @@ class Basic(Base):
         nullable=False,
         index=True
     )
-    is_crawled = Column('is_crawled', Boolean, default=False, nullable=False, index=True)
+    is_crawled = Column(
+        'is_crawled',
+        Boolean,
+        default=False,
+        nullable=False,
+        index=True
+    )
 
     @staticmethod
     def mapping():
