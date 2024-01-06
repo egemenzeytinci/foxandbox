@@ -152,7 +152,7 @@ class BasicService:
         finally:
             session.close()
 
-    def get_by_random(self, image_status=ImageStatus.HORIZONTAL_IMAGE):
+    def get_by_random(self, image_status=ImageStatus.BOTH):
         """
         Get movie by random
 
