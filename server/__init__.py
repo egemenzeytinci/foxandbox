@@ -2,7 +2,7 @@ from flask import Flask
 from util.config import config
 from util.ninja import Ninja
 
-app = Flask('recommovie', template_folder='template', static_folder='./assets')
+app = Flask('foxandbox', template_folder='template', static_folder='./assets')
 
 # update flask configuration
 app.config['SECRET_KEY'] = config.app.secret_key
