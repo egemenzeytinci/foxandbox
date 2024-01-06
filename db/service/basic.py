@@ -126,7 +126,7 @@ class BasicService:
 
         filters = [
             b.description.isnot(None),
-            b.image_status == ImageStatus.VERTICAL_IMAGE,
+            b.image_status >= ImageStatus.VERTICAL_IMAGE,
         ]
 
         try:
