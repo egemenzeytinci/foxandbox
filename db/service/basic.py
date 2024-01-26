@@ -206,7 +206,7 @@ class BasicService:
             b.image_status >= ImageStatus.VERTICAL_IMAGE,
             b.title_type == tt.get('movie'),
             b.published_date.isnot(None),
-            func.current_date() - b.published_date < 90
+            func.current_date() - b.published_date < 120
         ]
 
         try:
