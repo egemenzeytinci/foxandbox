@@ -202,12 +202,11 @@ class BasicService:
         session = get_session()
 
         filters = [
-            r.num_votes >= 20000,
-            r.average_rating >= 6.0,
             b.description.isnot(None),
-            b.image_status == ImageStatus.VERTICAL_IMAGE,
+            b.image_status >= ImageStatus.VERTICAL_IMAGE,
             b.title_type == tt.get('movie'),
             b.published_date.isnot(None),
+            func.current_date() - b.published_date < 90
         ]
 
         try:
@@ -215,7 +214,7 @@ class BasicService:
                 .query(b, r) \
                 .join(r, b.title_id == r.title_id) \
                 .filter(*filters) \
-                .order_by(b.published_date.desc()) \
+                .order_by((r.num_votes * r.average_rating).desc()) \
                 .limit(8) \
                 .all()
 
