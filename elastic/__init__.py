@@ -1,9 +1,6 @@
 from elasticsearch import Elasticsearch
 from util.config import config
 
-from elasticsearch import Elasticsearch
-from util.config import config
-
 es = Elasticsearch(
     hosts=config.elastic.hosts,
     port=config.elastic.port,
