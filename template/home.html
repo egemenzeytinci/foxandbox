@@ -20,12 +20,12 @@
                                 </p>
                                 <div class="row mt-5">
                                     <div class="col-12 col-md-6 col-xl-6">
-                                        <img class="fade-image" src="/static/images/{{ slide.basic.title_id }}_horizontal.webp" alt="{{ slide.basic.original_title }}">
+                                        <img class="fade-image" src="/static/images/{{ slide.basic.title_id }}_horizontal.webp" alt="{{ slide.basic.primary_title }}">
                                     </div>
                                     <div class="col-12 col-md-6 col-xl-6">
                                         <a href="/detail/{{ slide.basic.title_id }}" class="stretched-link" target="_blank"></a>
                                         <h5 class="text-white mt-3">
-                                            {{ slide.basic.original_title }}
+                                            {{ slide.basic.primary_title }}
                                         </h5>
                                         <h5 class="text-white mt-3">
                                             {{ ', '.join(slide.basic.genres) }}
@@ -68,7 +68,7 @@
                 <div class="d-flex flex-row flex-nowrap overflow-auto">
                     {% for movie in grid_movies %}
                         <div class="card card-scroll">
-                            <img src="/static/images/{{ movie.basic.title_id }}_horizontal.webp" class="card-img-top h-100" alt="{{ movie.basic.original_title }}">
+                            <img src="/static/images/{{ movie.basic.title_id }}_horizontal.webp" class="card-img-top h-100" alt="{{ movie.basic.primary_title }}">
                             <a href="/detail/{{ movie.basic.title_id }}" class="stretched-link" target="_blank"></a>
                         </div>
                     {% endfor %}
@@ -83,7 +83,7 @@
                         <img src="/static/images/{{ card.basic.title_id }}.webp" class="card-img-top" alt="">
                         <div class="card-body">
                             <p class="card-text">
-                                {{ card.basic.original_title }}
+                                {{ card.basic.primary_title }}
                             </p>
                         </div>
                         <a href="/detail/{{ card.basic.title_id }}" class="stretched-link" target="_blank"></a>

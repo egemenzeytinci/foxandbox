@@ -62,7 +62,7 @@ class Seed:
 
         # check if source file exists
         if not os.path.exists(path):
-            raise Exception(f'The {file_name} does not exist.')
+            raise SystemError(f'The {file_name} does not exist.')
 
         # open gzip file
         file = gzip.open(path, 'rt')

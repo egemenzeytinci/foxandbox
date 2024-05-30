@@ -10,4 +10,3 @@ es = Elasticsearch(
     ),
     retry_on_timeout=True
 )
-

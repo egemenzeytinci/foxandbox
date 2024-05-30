@@ -5,7 +5,7 @@ from elasticsearch_dsl import Document, Float, Integer, Keyword
 class Basic(Document):
     title_id = Keyword()
     image_url = Keyword(index=False)
-    original_title = Keyword(index=False)
+    primary_title = Keyword(index=False)
     genres = Keyword()
     start_year = Integer()
     average_rating = Float()
