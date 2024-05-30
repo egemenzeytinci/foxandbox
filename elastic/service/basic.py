@@ -58,7 +58,7 @@ class ElasticBasicService:
 
                 # set features
                 b.title_id = r.basic.title_id
-                b.original_title = r.basic.original_title
+                b.primary_title = r.basic.primary_title
                 b.genres = r.basic.genres
                 b.start_year = r.basic.start_year
                 b.average_rating = r.rating.average_rating

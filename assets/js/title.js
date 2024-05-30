@@ -78,7 +78,7 @@
                     <img src="/static/images/${r.title_id}.webp" class="card-img-top" alt="">
                     <div class="card-body">
                         <p class="card-text">
-                            ${r.original_title}
+                            ${r.primary_title}
                         </p>
                     </div>
                     <a href="/detail/${r.title_id}" class="stretched-link" target="_blank"></a>

@@ -5,12 +5,12 @@
     <meta property="og:url" content="https://foxandbox.io/detail/{{ original.basic.title_id }}"/>
     <meta property="og:image" content="/static/images/{{ original.basic.title_id }}.webp"/>
     <meta property="og:genres" content="{{ ', '.join(original.basic.genres) }}"/>
-    <meta property="og:title" content="{{ original.basic.original_title }} ({{ original.basic.start_year }})"/>
+    <meta property="og:title" content="{{ original.basic.primary_title }} ({{ original.basic.start_year }})"/>
 
     <meta itemprop="url" content="https://foxandbox.iodetail/{{ original.basic.title_id }}"/>
     <meta itemprop="image" content="{{ original.basic.image_url }}"/>
     <meta itemprop="genres" content="{{ ', '.join(original.basic.genres) }}"/>
-    <meta itemprop="title" content="{{ original.basic.original_title }} ({{ original.basic.start_year }})"/>
+    <meta itemprop="title" content="{{ original.basic.primary_title }} ({{ original.basic.start_year }})"/>
 {% endblock %}
 
 {% block content %}
@@ -18,7 +18,7 @@
         <div class="row mt-4">
             <div class="col-6">
                 <span class="fw-bold">
-                    {{ original.basic.original_title }}
+                    {{ original.basic.primary_title }}
                 </span>
                 <div class="rating mt-2">
                     <span>
@@ -105,7 +105,7 @@
                         <img src="/static/images/{{ r.basic.title_id }}.webp" class="card-img-top" alt="">
                         <div class="card-body">
                             <p class="card-text">
-                                {{ r.basic.original_title }}
+                                {{ r.basic.primary_title }}
                             </p>
                         </div>
                         <a href="/detail/{{ r.basic.title_id }}" class="stretched-link" target="_blank"></a>
