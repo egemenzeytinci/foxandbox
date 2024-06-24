@@ -58,11 +58,45 @@ def parse(content):
     :return: the json which contains movie information
     :rtype: json
     """
-    # get ld json
-    attrs = {'type': 'application/ld+json'}
-    full_info = content.find('script', attrs=attrs).string
+    result = Dict()
 
-    return Dict(json.loads(full_info))
+    # get ld json
+    full_info = content.find(
+        'script',
+        attrs={'type': 'application/ld+json'}
+    ).string
+
+    next_data = content.find(
+        'script',
+        attrs={'id': '__NEXT_DATA__'}
+    ).string
+
+    result.full_info = Dict(json.loads(full_info))
+    result.next_data = Dict(json.loads(next_data))
+
+    return result
+
+
+def get_meta_score(info):
+    """
+    Get json which contains movie details
+
+    :param bs4.BeautifulSoup content: BeautifulSoup from html content
+    :return: the movie's metascore
+    :rtype: float
+    """
+    fold_data = info['props']['pageProps']['aboveTheFoldData']
+
+    critic = None
+
+    if 'metacritic' in fold_data:
+        critic = fold_data['metacritic']
+
+    return (
+        float(critic['metascore']['score'])
+        if critic is not None
+        else None
+    )
 
 
 def get_information(path):
@@ -235,7 +269,12 @@ def append(movie_id):
         movie.title_id = movie_id
 
         path = f'{BASE_PATH}/{movie_id}'
-        info = get_information(path)
+        parsed = get_information(path)
+
+        info = parsed.full_info
+        next_data = parsed.next_data
+
+        movie.meta_score = get_meta_score(next_data)
 
         # save poster image to cloud
         poster_img = get_poster(info)
@@ -246,7 +285,7 @@ def append(movie_id):
         movie.published_date = get_published_date(info)
 
         path = f'{BASE_PATH}/{movie_id}/mediaindex'
-        info = get_information(path)
+        info = get_information(path).full_info
 
         # save horizontal image to cloud
         horizontal_img = get_horizontal_image(info)

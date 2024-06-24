@@ -1,7 +1,7 @@
 from addict import Dict
 from db import Base
 from enum import Enum
-from sqlalchemy import Boolean, Column, Date, Integer, SmallInteger, String, Text
+from sqlalchemy import Boolean, Column, Date, Float, Integer, SmallInteger, String, Text
 from sqlalchemy.types import ARRAY as Array
 import re
 
@@ -61,6 +61,7 @@ class Basic(Base):
     title_type = Column('title_type', SmallInteger, nullable=False, index=True)
     primary_title = Column('primary_title', String(500))
     original_title = Column('original_title', String(500))
+    meta_score = Column('meta_score', Float)
     is_adult = Column('is_adult', Boolean)
     start_year = Column('start_year', Integer)
     end_year = Column('end_year', Integer)
