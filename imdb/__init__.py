@@ -345,6 +345,7 @@ def crawl(ids):
         instance.description = record.get('description')
         instance.horizontal_image = record.get('horizontal_image')
         instance.published_date = record.get('published_date')
+        instance.meta_score = record.get('meta_score')
         instance.image_status = ims if ims else ImageStatus.NO_IMAGE
         instance.is_crawled = True
 
