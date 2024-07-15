@@ -19,7 +19,7 @@ def get_engine():
 
     u = f'postgresql://{user}:{password}@{host}:{port}/{db}'
 
-    return create_engine(u)
+    return create_engine(u, pool_pre_ping=True)
 
 
 def get_session():
