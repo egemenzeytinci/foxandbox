@@ -205,8 +205,9 @@ class BasicService:
             b.description.isnot(None),
             b.image_status >= ImageStatus.VERTICAL_IMAGE,
             b.title_type == tt.get('movie'),
-            b.published_date.isnot(None),
-            func.current_date() - b.published_date < 120
+            b.start_year.isnot(None),
+            b.start_year == func.date_part('year', func.current_date()),
+            b.meta_score.isnot(None),
         ]
 
         try:

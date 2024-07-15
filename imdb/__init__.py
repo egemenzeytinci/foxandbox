@@ -64,12 +64,24 @@ def parse(content):
     full_info = content.find(
         'script',
         attrs={'type': 'application/ld+json'}
-    ).string
+    )
 
     next_data = content.find(
         'script',
         attrs={'id': '__NEXT_DATA__'}
-    ).string
+    )
+
+    full_info = (
+        full_info.string
+        if full_info is not None
+        else '{}'
+    )
+
+    next_data = (
+        next_data.string
+        if next_data is not None
+        else '{}'
+    )
 
     result.full_info = Dict(json.loads(full_info))
     result.next_data = Dict(json.loads(next_data))
