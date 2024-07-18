@@ -161,22 +161,23 @@ def get_horizontal_image(info):
     :return: horizontal image
     :rtype: str
     """
-    if 'image' not in info.keys():
+    content_data = info['props']['pageProps']['contentData']
+
+    if 'section' not in content_data.keys():
         return None
 
-    images = info.image
+    items = content_data['section']['items']
 
-    # returns dictionary if only one picture, otherwise list
-    if isinstance(info.image, dict):
-        images = [info.image]
-    elif isinstance(info.image, tuple):
-        images = info.image
+    if len(items) < 1:
+        return None
 
-    image_url = None
+    for item in items:
+        item = Dict(item).copy()
 
-    for im in images:
+        im = item.image
+
         # get image width and height
-        width, height = int(im.width), int(im.height)
+        width, height = int(im.maxWidth), int(im.maxHeight)
 
         if 1.33 < width / height < 1.66:
             image_url = im.url
@@ -297,7 +298,7 @@ def append(movie_id):
         movie.published_date = get_published_date(info)
 
         path = f'{BASE_PATH}/{movie_id}/mediaindex'
-        info = get_information(path).full_info
+        info = get_information(path).next_data
 
         # save horizontal image to cloud
         horizontal_img = get_horizontal_image(info)
